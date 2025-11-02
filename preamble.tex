@@ -1,0 +1,76 @@
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\usepackage{gensymb}
+\usepackage{titling}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{subfiles}
+\usepackage{nicematrix}
+
+%specific to this project:
+\usepackage{braket} %allows to make quantum brackets with \bra \ket
+\usepackage{quantikz} %allows for quantum circuits to be drawn.
+
+%general math commands:
+\newcommand{\sumX}{\displaystyle\sum}
+\newcommand{\sinhalf}[1]{\sin(\frac{#1}{2})}
+\newcommand{\coshalf}[1]{\cos(\frac{#1}{2})}
+\newcommand{\sinphihalf}[1]{\sinhalf{\varphi}}
+\newcommand{\cosphihalf}[1]{\coshalf{\varphi}}
+\newcommand{\mC}[1]{\mathbb{C}^{#1}}
+
+%linalg commands:
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\colvec}[1]{%
+    \begin{pmatrix}
+    #1
+    \end{pmatrix}
+}
+
+\newcommand{\idmattwo}[1]{
+  \ensuremath{\begin{pmatrix} #1 & 0 \\ 0 & #1 \end{pmatrix}}
+}
+
+
+
+\newcommand{\unimattwo}{\ensuremath{\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}}}
+
+%specific new commands for this project:
+\newcommand{\ketz}[0]{\ensuremath{\ket{0}}}
+\newcommand{\keto}[0]{\ensuremath{\ket{1}}}
+\newcommand{\ketzz}[0]{\ensuremath{\ket{00}}}
+\newcommand{\ketzo}[0]{\ensuremath{\ket{01}}}
+\newcommand{\ketoz}[0]{\ensuremath{\ket{10}}}
+\newcommand{\ketoo}[0]{\ensuremath{\ket{11}}}
+
+
+\newcommand{\tbra}[1]{\ensuremath{\bra{#1}}}
+\newcommand{\tket}[1]{\ensuremath{\ket{#1}}}
+
+\newcommand{\ketp}[0]{\ensuremath{\ket{\psi}}}
+\newcommand{\ketpp}[0]{\ensuremath{\ket{\psi'}}}
+
+\newcommand{\qc}[1]{\begin{quantikz}
+        && \gate{#1} &&
+    \end{quantikz} }
+
+\newcommand{\Rz}[1]{
+    \ensuremath{
+        \begin{pmatrix} 
+            e^{-i\frac{#1}{2}} & 0 \\ 0 & e^{i\frac{#1}{2}} 
+        \end{pmatrix}
+    }
+}
+
+\newcommand{\Ry}[1]{
+    \ensuremath{
+        \begin{pmatrix} 
+            \coshalf{#1} & -\sinhalf{#1} \\ \sinhalf{#1} & \coshalf{#1}
+        \end{pmatrix}
+    }
+}
+
