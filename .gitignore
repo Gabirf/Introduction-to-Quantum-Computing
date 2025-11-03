@@ -1,0 +1,36 @@
+# LaTeX intermediate and output files
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+*.run.xml
+*.vrb
+*.xdv
+
+# PDF build outputs (optional — comment this out if you want to track PDFs)
+# *.pdf
+
+# Editor backups and temporary files
+*~
+*.swp
+*.bak
+*.tmp
+*.backup
+
+# macOS system files
+.DS_Store
+
+# VS Code settings
+.vscode/
+
+# Texifier project metadata (optional)
+*.texp
+
