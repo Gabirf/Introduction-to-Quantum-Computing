@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # IMPORTANT: This is needed to create/update the release
 
     steps:
       # 1️⃣ Check out the repo
