@@ -23,8 +23,15 @@ jobs:
           latexmk_options: -pdf -interaction=nonstopmode
 
       # 3️⃣ Upload the resulting PDF as an artifact
-      - name: Upload PDF
-        uses: actions/upload-artifact@v4
+      - name: Update Latest Release with PDF
+        uses: softprops/action-gh-release@v1
         with:
-          name: PDF
-          path: main.pdf             # PDF generated from main.tex
+          # This tag will be created/updated automatically. It won't clutter your git history.
+          tag_name: latest
+          name: "Latest PDF Build"
+          body: "This release contains the most up-to-date PDF compiled from the main branch."
+          # This will delete a previous release with the same tag and create a new one.
+          prerelease: false
+          # The file(s) to upload as assets to the release
+          files: main.pdf
+
