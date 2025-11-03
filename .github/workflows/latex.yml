@@ -24,6 +24,29 @@ jobs:
           root_file: main.tex        # your root LaTeX file
           latexmk_options: -pdf -interaction=nonstopmode
 
+          # --- OPTIMIZATION ---
+          # Provide an explicit list of all packages your document uses.
+          # This is MUCH faster than installing everything.
+          #
+          # How to find your packages:
+          # Look in your main.tex and preamble.tex for every \usepackage{...}
+          # and add the package name to this list.
+          packages: >-
+            graphicx
+            amsmath
+            amssymb
+            amsfonts
+            enumitem
+            gensymb
+            titling
+            tikz
+            xcolor
+            hyperref
+            subfiles
+            nicematrix
+            braket
+            quantikz
+
       # 3️⃣ Upload the resulting PDF as an artifact
       - name: Update Latest Release with PDF
         uses: softprops/action-gh-release@v1
