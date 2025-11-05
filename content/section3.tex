@@ -1,8 +1,9 @@
-\section{Entanglementand its applications}
+\section{Entanglementand and its applications}
+(Albert Einstein (1947): "spooky action at a distance") \\
 A n-qubit state \ketp $(n \ge 2)$ is called entangled if it cannot be written as tensor product of single qubit states, 
 i.e. \(\ketp = \ket{\varphi_{n-1}} \otimes \hdots \otimes \ket{\varphi_0}\) for any \(\ket{\varphi_0}, \hdots, \ket{\varphi_{n-1}} \in \mC{2}\) 
 
-\vspace*{10pt}
+\vspace{2pt}
 {\color{gray}
     \begin{quantikz}
         \lstick{$\ket{\varphi_0}$}      &&&  \\
@@ -23,11 +24,12 @@ Example: Bell states, also denoted EPR states (Einstein-Podolsky-Rosen)
 
 Quantum circuit to create Bell states:
 
-\vspace{5pt} 
+\vspace{1pt} 
 \begin{quantikz}
     \lstick{$\ket{x}$} & \gate{H} & \ctrl{1} & \rstick[wires=2]{$\ket{\beta_{xy}}$ for $x, y \in {0,1}$}\\
     \lstick{$\ket{y}$} & \qw      & \targ{}  & 
 \end{quantikz}
+
 
 \subsection{Quantum teleportation}
 (Nielsen and Chuang section 1.3.7)
@@ -40,11 +42,131 @@ Alice's task is to send another (unknown) qubit state \ketp \,to Bob. \\
 Note: measurement is not an option. \\
 Quantum circuit for teleporting \ketp:
 
-\vspace{10pt}
+\vspace{5pt}
 \begin{quantikz}
-    \lstick{\textcolor{red}{\ketp}}       && \ctrl{1} & \gate{H} & \meter{} & \setwiretype{c}               & \wire[d][2]{c}                                    \\
-    \lstick[wires=2]{$\ket{\beta_{00}}$}  && \targ{}  & \qw      & \meter{} & \setwiretype{c} \wire[d][1]{c}                                                    \\
-                                          && \qw      & \qw      & \qw      & \gate{x}                      & \gate{z}       & \rstick{\textcolor{red}{\ketp}}  \\
-\end{quantikz}
+    \lstick{\textcolor{red}{\ketp}}       && \ctrl{1}  \slice{$\ket{\psi_1}$} & \gate{H} \slice{$\ket{\psi_2}$} & \meter{} & \setwiretype{c} & \wire[d][2]{c} \\
+    \lstick[wires=2]{$\ket{\beta_{00}}$}  && \targ{}   \qw                    & \qw                             & \meter{} & \setwiretype{c} \wire[d][1]{c} \\
+                                          && \qw       \qw                    & \qw                             & \qw      & \gate{x}        & \gate{z}       & \rstick{\textcolor{red}{\ketp}}
+\end{quantikz} \\
+\textcolor{gray}{(wire 1 \& 2 represent Alice's 2 qubits, wire 3 represents Bob's Qubit.)} \\
 
-\textcolor{gray}{(wire 1 \& 2 represent Alice, wire 3 represents Bob.)}
+\noindent
+Input: \begin{align*} \ketp \ket{\beta_{00}} = \ketp \otimes \ket{\beta_{00}} &= (\super) \otimes (\ketzz + \ketoo) \\ &= \frac{1}{\sqrt{2}} (\alpha \keto(\ketzz + \ketoo) + \beta\keto (\ketzz + \ketoo))\end{align*}
+
+\noindent
+after CNOT: \\
+\(\frac{1}{\sqrt{2}} (\alpha \keto(\ketzz + \ketoo) + \beta\keto (\ket{\textcolor{red}{1}0} + \ket{\textcolor{red}{0}1}))\) \\
+
+\noindent
+after Hadamard:
+\begin{align*}
+    \ket{\psi_2} 
+    &= \frac{1}{\sqrt{2}} (\alpha (\ketX{+})(\ketzz + \ketoo) + \beta(\ketX{-}) (\ketoz + \ketzo)) \\
+    &= \frac{1}{2} (\alpha \ket{000} + \alpha\ket{011} + \alpha\ket{101} + \alpha\ket{111} + \beta\ket{010} + \beta\ket{001} - \beta\ket{110} - \beta\ket{101}) \\
+    &= \frac{1}{2} \ketzz (\super) + \ketzo (\alpha\keto + \beta\ketz) + \ketoz (\super[-]) + \ketoo(\alpha\keto - \beta\ketz)
+\end{align*}
+
+\noindent
+Now Alice measures her qubits w.r.t computational basis.\\
+Projective measurement with 
+\begin{align*}
+    P_1 &= \ketzz \brazz \otimes I, \; P_2 = \ketzo \brazo \otimes I,\\ P_3 &= \ketoz \braoz \otimes I,\; P_4 = \ketoo \braoo \otimes I
+\end{align*}
+If Alice measures 00, then $\ket{\psi_2}$ will collapse to:
+
+\[
+    \ketzz (\super) = \ketzz \textcolor{red}{\ketp \text{(qubit at bobs place)}}
+\]
+
+similary:
+\begin{align*}
+    00 &\longrightarrow \super \\
+    01 &\longrightarrow \alpha\keto + \beta\ketz \\
+    10 &\longrightarrow \super[-] \\
+    11 &\longrightarrow \alpha\keto - \beta\ketz \\
+\end{align*}
+
+\noindent
+Alice transmits her measurement results to Bob (classical information). \\
+Bob then applies Pauli-X and/or Pauli-Z if necessary to recover the original state \ketp.
+
+\noindent
+Even though the wavefunction collapse is instantanious, it does not allow for "faster-than-light" information transfer due to the required classical communication and the randomness of the measurement outcome.
+
+\newpage
+\subsection{EPR and the Bell inequality}
+(Nielsen and Chuang section 2.6) \\
+(Albert Einstein (1926): "god does not play dice")\\
+
+\noindent
+EPR (Einstein-Podolsky-Rosen) paper: \\ "Can quantum mechanical description of physical reality be considered complete?" \\
+
+\noindent
+The authors argue that quantum mechanics is incomplete, since it lacks certain "elements of reality" (properties that can be predicted with certainty).\\
+
+\noindent
+Scenario: Alice and Bob are far away from eachother but share the entangled two-qubit "spin-singlet" state 
+
+\(\ket{\beta_{11}} = \frac{1}{\sqrt{2}} (\ketzo - \ketoz)\) \\
+Alice and Bob measure the observable $\vec{v} \circ \vec{\sigma} = v_1X + v_2Y + v_3Z$ \\
+(with $\vec{v} \in \mathbb{R}^3, \norm{\vec{v}} = 1$) on their respective qubit. \\
+Recall that $\vec{v} \circ \vec{\sigma}$ is Hermitian and unitary and has eigenvalues $\pm 1$. \\
+Alice performs her measurement immediatly before Bob.\\
+
+\noindent
+Example:
+
+\begin{itemize}
+    \item $\vec{v} = (0, 0, 1),$ observable Z = $\textcolor{blue}{1} \cdot \ketz\braz + \textcolor{green}{(-1)} \cdot \keto\brao$  $\mid$ (standard measurement) \\
+        if Alice measures the eigenvalue:
+        \begin{enumerate}[label=]
+            \item  \ \textcolor{blue}{1}: wavefunction collapses to \ketzo
+            \item \textcolor{green}{-1}: wavefunction collapsed to \ketoz
+        \end{enumerate}
+        $\leadsto$ Bob will always obtain the opposite measurement result.
+    
+    \item $\vec{v} = (1, 0, 0)$: observable X, eigenstates $\ket{\pm} = \frac{1}{\sqrt{2}}(\super[\pm])$\\
+            (measurement w.r.t. ${\ket{+}, \ket{-}}$ basis) \\
+            We can represent the wavefunction as:
+            \[\ket{\beta_{11}} = \frac{1}{\sqrt{2}} (\ket{+-} - \ket{-+})\]
+            namely: 
+            \begin{align*}
+                -\frac{1}{\sqrt{2}} (\ket{+-}\; - \;\ket{-+}) 
+                &= - \frac{1}{\sqrt{2}} (\;\frac{1}{2}(\super) (\super[-]) - \frac{1}{2}(\super[-]) (\super)) \\
+                &= \hdots \\
+                &= \frac{1}{\sqrt{2}}(\ketzo - \ketoz) \\
+                &= \ket{\beta_{11}}
+            \end{align*}
+
+            \noindent
+            If Alice measures eigenvalue 1, the wavefunction will collapse t $\ket{+-} \leadsto$ Bob'squbit is in state $\ket{-}$.\\
+            So he will certainly measure eigenvalue (-1). (conversly if Alice measures -1)
+    
+    \item general observable $\vec{v} \circ \vec{\sigma}$, general unit vector $\vec{v} \in \mathbb{R}^3:$ denote the orthogonal eigenstates of $\vec{v} \circ \vec{\sigma}$ by $\ket{a}, \ket{b},$ then there exist complex numbers $\alpha, \beta, \gamma$ and $\delta$ such that:
+            \begin{align*}
+                \ketz &= \alpha\ket{\alpha} + \beta\ket{\beta} \\
+                \keto &= \gamma\ket{\alpha} + \delta\ket{\beta}
+            \end{align*}
+            Inserted into $\ket{\beta_{11}}$ (see also Exercice 8.1(a)):
+            \[\frac{1}{\sqrt2} (\ketzo - \ketoz) = \underbrace{(\alpha\delta - \beta\gamma)}_{det(U)\text{ with U }= \colvec{\alpha & \beta \\ \gamma & \delta}} \frac{1}{\sqrt{2}}(\ket{ab} - \ket{ba})\]
+            U is a base change matrix between the orthonormal \compbas and $\{\ket{a}, \ket{b}\}$ basis $\leadsto$ U unitary $\rightarrow |det(U)| = 1$ (Ex. 1.2(e))
+            Can represent det(U) = \(e^{i\theta}, \theta \in \mathbb{R}\) \\
+            In summary: \(\frac{1}{\sqrt{2}} (\ketzo - \ketoz) = e^{i\theta}\frac{1}{\sqrt{2}} (\ket{ab} - \ket{ba})\)\\
+            $\leadsto$ as before: Bob will obtain opposite measurement result as Alice.\\
+            Therefore Alice can predict Bob's measurement result.
+\end{itemize}
+
+\noindent
+However, there is no possibility that alice could influence Bob's measurement (after performing her measurement) since they are far apart (speed of light is too slow) \\
+EPR argument: "property" $\vec{v} \circ \vec{\sigma}$ of a qubit is an "element of reality". \\
+Quantum mechanics does not a priori specify this property for all possible $\vec{v}$ (but only probabilities), and is thus an incomplete description of reality. \\
+
+\noindent
+Instead: "hidden variable theory": there must be additional variables "hidden" in a qubit which determines Bob's measurement of $\vec{v} \circ \vec{\sigma}$ for all possible $\vec{v} \in \mathbb{R}^3$. \\
+
+\noindent
+(Niels Bohr (October 1927): "Stop telling God what to do")\\
+Bell's inequality: experimental test which can \underline{invalidate} local hidden variable theories. (Bell 1964)\\
+
+\noindent
+"\underline{local}": no faster-than-light communication possible (otherwise one could send information backwards in time according to special relativity)

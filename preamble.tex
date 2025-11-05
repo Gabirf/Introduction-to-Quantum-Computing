@@ -10,6 +10,7 @@
 \usepackage{subfiles}
 \usepackage{nicematrix}
 \usepackage{xparse, etoolbox}     % Allows for more elegant command solutions like 2 default values.
+\usepackage{xstring}
 
 %specific to this project:
 \usepackage{braket} %allows to make quantum brackets with \bra \ket
@@ -42,20 +43,46 @@
 %specific new commands for this project:
 \newcommand{\ketz}[0]{\ensuremath{\ket{0}}}
 \newcommand{\keto}[0]{\ensuremath{\ket{1}}}
-\newcommand{\ketzz}[0]{\ensuremath{\ket{00}}}
+\newcommand{\ketzz}[0]{\ensuremath{\ket{00}}} 
 \newcommand{\ketzo}[0]{\ensuremath{\ket{01}}}
 \newcommand{\ketoz}[0]{\ensuremath{\ket{10}}}
 \newcommand{\ketoo}[0]{\ensuremath{\ket{11}}}
 
 \newcommand{\braz}[0]{\ensuremath{\bra{0}}}
 \newcommand{\brao}[0]{\ensuremath{\bra{1}}}
-
+\newcommand{\brazz}[0]{\ensuremath{\bra{00}}} 
+\newcommand{\brazo}[0]{\ensuremath{\bra{01}}}
+\newcommand{\braoz}[0]{\ensuremath{\bra{10}}}
+\newcommand{\braoo}[0]{\ensuremath{\bra{11}}}
 
 \newcommand{\tbra}[1]{\ensuremath{\bra{#1}}}
 \newcommand{\tket}[1]{\ensuremath{\ket{#1}}}
 
 \newcommand{\ketp}[0]{\ensuremath{\ket{\psi}}}
 \newcommand{\ketpp}[0]{\ensuremath{\ket{\psi'}}}
+
+
+\NewDocumentCommand{\ketX}{O{1} O{0} m}{%
+  \ensuremath{
+  % --- Prefix Conditional (Argument #2) ---
+  \IfEq{#2}{1}{\frac{1}{\sqrt{2}}}{}%
+  % --- Main Switch (Argument #3) ---
+  \IfEqCase{#3}{%
+    {+}{%
+      % Inner Conditional (Argument #1)
+      \IfEqCase{#1}{%
+        {1}{\ket{0} + \ket{1}}%
+        {2}{ErrDimensions}%
+      }[{\ket{ErrDimensions}}]%
+    }%
+    {-}{%
+      % Inner Conditional (Argument #1)
+      \IfEq{#1}{2}{\ket{0} - \ket{1}}{\ket{ErrDimensions}}%
+    }%
+    % ... other cases ...
+  }[\ket{#3}]%
+  }
+}
 
 \newcommand{\brap}[0]{\ensuremath{\bra{\psi}}}
 
@@ -73,7 +100,7 @@
    }
 } 
 
-\NewDocumentCommand{\super}{O{\alpha} O{\beta}}{\ensuremath{#1\ketz + #2\keto}}
+\NewDocumentCommand{\super}{O{+} O{\alpha} O{\beta}}{\ensuremath{#2\ketz #1 #3\keto}}%
 
 \newcommand{\qc}[1]{\begin{quantikz}
         && \gate{#1} &&
