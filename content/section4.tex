@@ -1,0 +1,57 @@
+\section{Quantum search algorithms}
+(Nielsen and Chuang: section 6)\\
+
+\noindent
+Classical search through N unordered elements: O(N) \\
+Quantum Groover's algorithm: O($\sqrt{N}$) (under certain preconditions)
+
+\subsection{Quantum oracles}
+search space of $N = 2^n$ elements, labelled 0, 1, $\hdots$, N-1. \\
+Assume there are M solutions (with $1 \le M \le N$) \\
+Define corresponding \underline{indicator function} \(f: {0, \hdots, N-1} \rightarrow {0,1}\)
+\[
+    f(x) = \begin{cases}
+        0, & \text{if element x is \underline{not} a solution} \\
+        1, & \text{if element x \underline{is} a solition}
+    \end{cases}
+\]
+
+\noindent
+Quantum version of f? \\
+$\leadsto$ quantum "oracle" Uf defined for computational basic states
+
+\begin{quantikz}
+    \lstick{$\ket{x}$} & \qwbundle{n} & \gate[2]{U_f} && \rstick{$\ket{x}$( \textcolor{gray}{register of n quibits})}\\
+    \lstick{$\ket{q}$} &              & \qw           && \rstick{$\ket{q \oplus f(x)}$}
+\end{quantikz}
+
+\noindent
+Notes: \\
+With \(x = x_{n-1} \hdots x_1 x_0 \Rightarrow \ket{x} = \ket{x_{n-1}} \hdots \ket{x_1} \ket{x}\).\\
+$U_f$ maps basis states to basis states and satisfies $U_f^2 = I ( q \oplus f(x) \oplus f(x) = q)$ \\
+Thus $U_f$ permites basis states and is in particular unitary.\\
+
+\noindent
+Initialize the orcle in superpositions $\ket{-} = \ketX[1][1]{-}$, then
+\[\ket{x} \otimes \frac{\ketX{-}}{\sqrt{2}} \xmapsto{U_f} 
+            \begin{cases}
+                \ket{x} \otimes \frac{\ketX{-}}{\sqrt{2}} \\
+                \ket{x} \otimes \frac{\keto - \ketz}{\sqrt{2}} = \textcolor{blue}{-} \ket{x} \otimes \frac{\super[-][][]}{\sqrt{2}}
+            \end{cases}
+\]
+In summary: \(\ket{x} \otimes \frac{\ketX{-}}{\sqrt{2}} \xmapsto{U_f} \textcolor{blue}{(-1)^{f(x)}} \ket{x} \otimes \frac{\ketX{-}}{\sqrt{2}} \mid \text{(oracle qubit unchanged)}\)
+Effective action of oracle:
+\begin{quantikz}
+    \lstick{$\ket{x}$} & \gate{U_f} & \rstick{$(-1)^{f(x)}\ket{x}$}
+\end{quantikz}
+
+$\leadsto$ oracle "marks" solutions by a phase flip. \\
+
+\noindent
+How could one construct such and oracle without knowing the solution already?\\
+Example: factorisation of a large integer \(m \in N\): \\
+\indent Finding prime factors of m is "difficult" on a classical computer: \\
+\indent (no known algorithm with polynomial runtime in the bitlength of m) \\
+But testing whether a given $x \in \mathbb{N}$ divides m is simple. \\
+Can perform arithmetic operations for trial division on a digital quantum computer as well $\leadsto$ oracle which recognizes a solution x.
+\textcolor{gray}{(Remark: "better" quantum algorithm for integer factorisation: Shor's algorithm.)}

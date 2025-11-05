@@ -165,8 +165,66 @@ Quantum mechanics does not a priori specify this property for all possible $\vec
 Instead: "hidden variable theory": there must be additional variables "hidden" in a qubit which determines Bob's measurement of $\vec{v} \circ \vec{\sigma}$ for all possible $\vec{v} \in \mathbb{R}^3$. \\
 
 \noindent
-(Niels Bohr (October 1927): "Stop telling God what to do")\\
+(Niels Bohr (October 1927): "Stop telling God what to do.")\\
 Bell's inequality: experimental test which can \underline{invalidate} local hidden variable theories. (Bell 1964)\\
 
 \noindent
 "\underline{local}": no faster-than-light communication possible (otherwise one could send information backwards in time according to special relativity)
+
+\noindent
+Experimental schematic: many repetitions (to collecect satistics of the following setup): \\
+"TODO import image"
+
+\begin{itemize}
+    \item Charlie: prepares two particles one for Alice and one for Bob.
+    \item Alice: decides randomly whether to measure Q or B.
+    \item Bob: decides randomly whether to measure S or T.
+\end{itemize}
+
+\noindent
+Binary property values: \(Q \in {\pm 1}, R \in {\pm 1}, S \in {\pm 1}, T \in {\pm 1}\).\\
+Alice and Bob perform their measurement (almost) simultaniously, such that no information about the result can be transmitted in between them.\\
+After this protocol, Alice and Bob meet to analyze their measurement data. \\
+Consider the quantity:
+\[Q \cdot S + R \cdot S + R \cdot T - Q \cdot T = \underbrace{(Q + R)}_{\pm 2 \; \lor \; 0} \cdot S + \underbrace{(R - Q)}_{0 \; \lor \; \pm 2}\cdot T = \pm 2\]
+Denote by p(q,r,s,t) the proability that the syste before this measurements is in the state \{Q = q, R = r, S = s, T = t\}, then we compute the average value:
+\begin{align*}
+    \expec[Q \cdot S + R \cdot S + R \cdot T - Q \cdot T] &= \sumX_{p, r, s, t \in {\pm 1}} p(q, r, s, t) \cdot \underbrace{(1 \cdot s + r \cdot s + r \cdot t - q \cdot t)}_{\pm 2} \\ &\le \sumX_{p, r, s, t \in {\pm 1}} p(q, r, s, t) \cdot 2 = 2
+\end{align*}
+By linearity of \expec[], we arrive at the following: \\
+
+\underline{Bell inequality:} \\
+\[\expec[Q \cdot S] + \expec[R \cdot S] + \expec[R \cdot T] + \expec[Q \cdot T] \le 2\]
+Each term can be experimentally evaluated, e.g. \expec[Q \cdot S]: Alice and Bob average over cases where Alice measured Q and Bob measured S. \\
+
+\noindent
+Compare with a "quantum" realization of the experiment: \\
+\indent Charlie prepares the two-qubit singlet state: \\
+\[\ketp = \frac{1}{\sqrt{2}} (\ket{\textcolor{green}{0} \textcolor{orange}{1}} - \ket{\textcolor{green}{1} \textcolor{orange}{0}})\]
+\indent and sends the first qubit to \textcolor{green}{Alice} and the 2nd to \textcolor{orange}{Bob}. \\
+
+Observables:
+\begin{align*}
+    Q &= Z_1 \; ( _1 \rightarrow\; first\; qubit\; (Alice)) \hspace{10pt} 
+      & S &= \frac{-Z_2 - X_2}{\sqrt{2}} \;( _2 \rightarrow\; second\; qubit\; (Bob))\\
+    R &= X_1 
+      & T &= \frac{Z_2 - X_2}{\sqrt{2}} 
+\end{align*}
+
+\noindent
+Measurement averages (c.f. Exercise 8.1)\\
+\(\Braket{Q \cdot S} = \BraKet{Q \otimes S} = \frac{1}{\sqrt{2}},\hspace{20pt} \Braket{R \cdot S} = \frac{1}{\sqrt{2}}\) \\
+\(\Braket{R \cdot T} = \frac{1}{\sqrt{2}},\hspace{90pt} \Braket{Q \cdot T} = - \frac{1}{\sqrt{2}}\) \\ \\
+\(\Braket{Q \cdot S } + \Braket{R \cdot S} + \Braket{R \cdot T} - \Braket{Q \cdot T} = 2 \sqrt{2} \; \textcolor{red}{\nleq 2}\) (violates Bell's inequality!)\\
+
+\noindent
+Actual laboratory experiments using photons agree with predictions by quantum mechanics thus not all (implicit) assumptions leading to Bell's inequality can be satisfied.
+\begin{itemize}
+    \item "realism": physical properties Q, S, R, T have definit values independent of observation (measurement)
+    \item "locality": Alice performing her measurement cannot influence Bob's measurementand vice versa.
+\end{itemize}
+$\leadsto$ Nature is not "locally realistic" (most common viewpoint: realism does not hold) \\
+Practical lesson: we can use entanglement as a ressource.\\
+
+\noindent
+(John Wheeler: If you are not completely confused by quantum mechanics, you do not understand it.)
