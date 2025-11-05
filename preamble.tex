@@ -1,15 +1,15 @@
-\usepackage{graphicx} % Required for inserting images
+\usepackage{graphicx}   % Required for inserting images
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsfonts}
 \usepackage{enumitem}
-\usepackage{gensymb}
 \usepackage{titling}
 \usepackage{tikz}
 \usepackage{xcolor}
 \usepackage{hyperref}
 \usepackage{subfiles}
 \usepackage{nicematrix}
+\usepackage{xparse, etoolbox}     % Allows for more elegant command solutions like 2 default values.
 
 %specific to this project:
 \usepackage{braket} %allows to make quantum brackets with \bra \ket
@@ -47,12 +47,33 @@
 \newcommand{\ketoz}[0]{\ensuremath{\ket{10}}}
 \newcommand{\ketoo}[0]{\ensuremath{\ket{11}}}
 
+\newcommand{\braz}[0]{\ensuremath{\bra{0}}}
+\newcommand{\brao}[0]{\ensuremath{\bra{1}}}
+
 
 \newcommand{\tbra}[1]{\ensuremath{\bra{#1}}}
 \newcommand{\tket}[1]{\ensuremath{\ket{#1}}}
 
 \newcommand{\ketp}[0]{\ensuremath{\ket{\psi}}}
 \newcommand{\ketpp}[0]{\ensuremath{\ket{\psi'}}}
+
+\newcommand{\brap}[0]{\ensuremath{\bra{\psi}}}
+
+\newcommand*{\compbas}[0]{\ensuremath{\{\ketz, \keto\}}}
+
+\NewDocumentCommand{\BraKet}{O{\psi} m}{%
+   \ensuremath{
+        \notblank{#2}{%
+            % Case when #2 is non-empty
+            \bra{#1} #2 \ket{#1}
+        }{%
+            % Case when #2 is empty (i.e., {})
+            \braket{#1 | #1}
+        }%
+   }
+} 
+
+\NewDocumentCommand{\super}{O{\alpha} O{\beta}}{\ensuremath{#1\ketz + #2\keto}}
 
 \newcommand{\qc}[1]{\begin{quantikz}
         && \gate{#1} &&
