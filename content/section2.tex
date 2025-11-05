@@ -334,3 +334,88 @@ Basic properties:
     \item Kronecker product of Hermitian matrices is Hermitian
     \item Kronecker product of unitary matrices is unitary (follows from (c) \& (e))
 \end{enumerate}
+
+\subsection{Quantum measurements}
+(Nielsen and Chuang sections 1.3.3, 2.2.3, 2.2.5) \\
+Review: measurement of a single qubit \ketp = \super with respect to computational basis{\ketz, \keto}:
+
+\begin{quantikz}
+    \lstick{\ketp} && \meter{} & \setwiretype{c} &
+\end{quantikz} classical data (measurement outcome 0 or 1) \\
+
+\noindent
+alternative notation:
+
+\begin{quantikz}
+    \lstick{\ketp}              & \meter{} \vcw{1}  & \rstick{qubit after measurement (collapsed wavefunction)}\\
+    \lstick{C} \setwiretype{c}  &                   & \rstick{measurement outcome}
+\end{quantikz} \\
+
+\newpage \noindent
+\underline{Unitary freedome of choice of measurement basis.} \\
+Given an orthonormal basis (ONB) $\{\ket{u_1}, \ket{u_2}\}$ can measure with respect to this orthonormal basis
+by performing a base change before and after the measurement: \\
+\(
+    U = (\ket{u_1} \ket{u_2}) \in \mC{2 \times 2} \; \text{unitary}
+\) \\ 
+\begin{quantikz}
+    \lstick{\ketp}              & \gate{u^\dagger} & \meter{} \vcw{1} & \gate{u}  & \\
+    \lstick{C} \setwiretype{c}  &            &                  &           &
+\end{quantikz} \\
+(measurement with respect to $\{\ket{u_1, \ket{u_2}}\}$, using a standard basis measurement) \\
+
+\noindent
+Representing the qubit \ketp = \super[\alpha_1][\alpha_2], $\alpha_1, \alpha_2 \in \mC{}$
+
+\begin{quantikz}
+    \lstick{\ketp} & \gate{U^{\dagger}} &
+\end{quantikz} \(\leadsto U^{\dagger} \ketp = \super[\alpha_1][\alpha_2] \hspace{5pt} \textcolor{gray}{(U^{\dagger}\ket{u_1} = \ketz, U^{\dagger}\ket{u_2} = \keto)}\)
+
+\noindent
+We will obtain measurement result 0 or 1 with the respective probabilities $|\alpha_1|^2 \text{ and } |\alpha_2|^2$ \\
+After measuring and applying U: \ketp  will be in the state $\ket{u_1}$ or $\ket{u_2}$. \\
+
+\noindent
+\underline{Abstract, general defenition of quantum measurements}\\
+Quantum measurements are described by a collection $\{M_m\}$ of \underline{measurement operators} acting on the quantum system,
+with the index m labelling possible measurement outcomes. \\
+Denoting the quantum state before the measurement by \ketp, result m occurs with probability:
+\[p(m) = \brap M_m^\dagger M_m \ketp = \norm{M_m \ketp}^2,\]
+state after the measurement is:
+\[\frac{M_m\ketp}{\norm{M_m\ketp}}\]
+The measurement operators satisfy the \underline{completeness relation}:
+\[\sumX_m M_m^\dagger M_m = I,\]
+such that the probabilities sum to 1: \\
+
+\begin{align*}
+    \sumX_m p(m) &= \sumX_m \BraKet{\underbrace{\sumX_m M_m^\dagger M_m}_I} = \BraKet{} = 1
+\end{align*}
+
+\newpage \noindent
+Example: measurement of a qubit \ketp = \super with respect to computational basis \compbas:
+\begin{align*}
+    M_0 &\coloneqq \underbrace{\braz \ketz}_{\text{outer product}} = \colvec{1 \\ 0} \colvec{1 & 0} = \colvec{1 & 0 \\ 0 & 0} \\
+    M_1 &\coloneqq \brao \keto = \colvec{0 \\ 1} \colvec{0 & 1} = \colvec{0 & 0 \\ 0 & 1}
+\end{align*}
+\begin{align*}
+    \leadsto & p(0) = \BraKet{M_0^\dagger M_0} = \BraKet{M_0} &&= \colvec{\alpha^* & \beta^*} \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix} \colvec{\alpha \\ \beta} \notag \\
+             & &&= |\alpha|^2 \\
+             & p(1) = \BraKet{M_1^\dagger M_1} = \hdots &&= |\beta|^2
+\end{align*}
+
+\noindent
+\underline{Projective measurements} \\
+\indent \textcolor{gray}{$\leadsto$ see projection-operators (moodle)} \\
+Definition: a \underline{projective measurement} is described by an \underline{observable} M, a Hermitian operator acting on the quantum system spectral decomposition $\leadsto$
+\[M = \sumX_m \lambda_m \textcolor{blue}{P_m}\]
+with \textcolor{blue}{$P_m$}: projection onto the eigenspace with eigenvalue $\lambda_m$. \\
+The possible outcomes of the measurement correspond to the eigenvalues $\lambda_m$. \\
+Probability of obtaining measurement result $\lambda_m$ :
+\[
+    \textcolor{orange}{p(}\lambda_m \textcolor{orange}{)} = \BraKet{\smash[b]{
+    \textcolor{blue}{P_m}}} \hspace{10pt} |\textcolor{gray}{P_m^\dagger P_m = P_m \text{ since } P_m \text{ is a projection}}
+\]
+State of the quantum system after the measurement:
+\[
+    \frac{P_m\ketp}{\norm{P_m\ketp}} = \frac{P_m\ketp}{\sqrt{\textcolor{orange}{p(}\lambda_m\textcolor{orange}{)}}}.
+\]  
