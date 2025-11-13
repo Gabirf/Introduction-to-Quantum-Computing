@@ -1,0 +1,50 @@
+\section{Entanglementand its applications}
+A n-qubit state \ketp $(n \ge 2)$ is called entangled if it cannot be written as tensor product of single qubit states, 
+i.e. \(\ketp = \ket{\varphi_{n-1}} \otimes \hdots \otimes \ket{\varphi_0}\) for any \(\ket{\varphi_0}, \hdots, \ket{\varphi_{n-1}} \in \mC{2}\) 
+
+\vspace*{10pt}
+{\color{gray}
+    \begin{quantikz}
+        \lstick{$\ket{\varphi_0}$}      &&&  \\
+        \lstick{$\ket{\varphi_1}$}      &&&  \\
+        \lstick{\scalebox{0.75}{\vdots}}                 &&&  \\
+        \lstick{$\ket{\varphi_{n-1}}$}  &&&
+    \end{quantikz}
+}
+
+\noindent
+Example: Bell states, also denoted EPR states (Einstein-Podolsky-Rosen)
+\begin{align*}
+    \ket{\beta_{00}} &= \frac{1}{\sqrt{2}}(\ketzz + \ketoo) \textcolor{gray}{ \ne \ket{a} \ket{b}} \\
+    \ket{\beta_{01}} &= \frac{1}{\sqrt{2}}(\ketzo + \ketoz) \\
+    \ket{\beta_{10}} &= \frac{1}{\sqrt{2}}(\ketzz + \ketoo) \\
+    \ket{\beta_{11}} &= \frac{1}{\sqrt{2}}(\ketzo + \ketoz)
+\end{align*}
+
+Quantum circuit to create Bell states:
+
+\vspace{5pt} 
+\begin{quantikz}
+    \lstick{$\ket{x}$} & \gate{H} & \ctrl{1} & \rstick[wires=2]{$\ket{\beta_{xy}}$ for $x, y \in {0,1}$}\\
+    \lstick{$\ket{y}$} & \qw      & \targ{}  & 
+\end{quantikz}
+
+\subsection{Quantum teleportation}
+(Nielsen and Chuang section 1.3.7)
+
+\noindent
+Scenario: two (experimental physicists) Alice and Bob are far away from each other.
+%\includegraphics*{imagefile}
+When visiting eachoter in the past, they generated the EPR pair $\ket{\beta_{00}}$, each keeping one qubit of the pair. \\
+Alice's task is to send another (unknown) qubit state \ketp \,to Bob. \\
+Note: measurement is not an option. \\
+Quantum circuit for teleporting \ketp:
+
+\vspace{10pt}
+\begin{quantikz}
+    \lstick{\textcolor{red}{\ketp}}       && \ctrl{1} & \gate{H} & \meter{} & \setwiretype{c}               & \wire[d][2]{c}                                    \\
+    \lstick[wires=2]{$\ket{\beta_{00}}$}  && \targ{}  & \qw      & \meter{} & \setwiretype{c} \wire[d][1]{c}                                                    \\
+                                          && \qw      & \qw      & \qw      & \gate{x}                      & \gate{z}       & \rstick{\textcolor{red}{\ketp}}  \\
+\end{quantikz}
+
+\textcolor{gray}{(wire 1 \& 2 represent Alice, wire 3 represents Bob.)}

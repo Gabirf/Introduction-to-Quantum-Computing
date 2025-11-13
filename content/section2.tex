@@ -365,7 +365,7 @@ by performing a base change before and after the measurement: \\
 (measurement with respect to $\{\ket{u_1, \ket{u_2}}\}$, using a standard basis measurement) \\
 
 \noindent
-Representing the qubit \ketp = \super[\alpha_1][\alpha_2], $\alpha_1, \alpha_2 \in \mC{}$
+Representing the qubit \ketp = \(\alpha_1 \ket{u_1} + \alpha_2 \ket{u_2}\), $\alpha_1, \alpha_2 \in \mC{}$
 
 \begin{quantikz}
     \lstick{\ketp} & \gate{U^{\dagger}} &
@@ -386,6 +386,8 @@ state after the measurement is:
 The measurement operators satisfy the \underline{completeness relation}:
 \[\sumX_m M_m^\dagger M_m = I,\]
 such that the probabilities sum to 1: \\
+
+
 
 \begin{align*}
     \sumX_m p(m) &= \sumX_m \BraKet{\underbrace{\sumX_m M_m^\dagger M_m}_I} = \BraKet{} = 1
@@ -418,4 +420,53 @@ Probability of obtaining measurement result $\lambda_m$ :
 State of the quantum system after the measurement:
 \[
     \frac{P_m\ketp}{\norm{P_m\ketp}} = \frac{P_m\ketp}{\sqrt{\textcolor{orange}{p(}\lambda_m\textcolor{orange}{)}}}.
-\]  
+\]
+
+\noindent
+Remarks:
+\begin{itemize}
+    \item Projective measurements are special cases of a general measurement framework.
+    \item Projective measurement combined with transformations (and auxiliary qubit) are equivalent to the general measurement formalism/framework.
+          (Proof: see pages 94, 95 in Nielsen and Chuang)
+\end{itemize}
+
+\noindent
+Average value of a projective measurement 
+\begin{align*}
+    \mathbb{E}[M] = \sumX_m \lambda_m p(\lambda_m) & = \sumX_m \lambda_m \BraKet{P_m} \\ 
+    & = \BraKet{\sumX_m \lambda_m p_m} = \BraKet{M} \eqqcolon \braket{M} \hspace{10pt} | \text{if \ketp is clear from context.}
+\end{align*}
+
+\noindent
+Corresponding \underline{standard deviation}:
+\begin{align*} 
+    \Delta(M) & \coloneqq \sqrt{\braket{M^2} - \braket{M}^2} \hspace{15pt} | \text{with } \braket{M^2} = \BraKet{M^2} \\
+              & = \sqrt{\braket{M - \braket{M}}^2}
+\end{align*}
+
+Examples:
+\begin{itemize}
+    \item Measuring a qubit w.r.t. (with respect to) computational basis \compbas is actually a projective measurement: \(P_0 = \ketz \braz, P_1 = \keto \brao\) \\
+            \textcolor{gray}{$p(0) = \BraKet{P_0} = \braket{\psi | 0} \braket{0 | \psi} = |\braket{0 | \psi}|^2$} \\
+            \textcolor{gray}{$\ketp = \super \leadsto |\braket{0 | \psi}|^2 = |\alpha|^2$}
+    \item In general: measurement w.r.t. orthogonal basis ${\ket{u_1}, \ket{u_2}}$ is a projective measurement:
+            \[\text{set } P_m = \ket{u_m} \bra{u_m} \text{ for } m = 1,2\]
+            Define observable M by
+            \[M \coloneqq \sumX_{m=1}^2 \lambda_m P_m \text{ with arbitrary } \lambda_1, \lambda_2 \in \mathbb{R}, \lambda_1 \ne \lambda_2\]
+    \item Measuring Pauli-Z \textcolor{gray}{(as observable)}:
+            \[z = 1 \cdot \underbrace{\colvec{1 & 0 \\ 0 & 0}}_{P_0 = \ketz \braz} + (-1) \underbrace{\colvec{0 & 0 \\ 0 & 1}}_{P_1 = \keto \brao} \]
+            Agrees with standard measurement w.r.t. the computational basis \compbas.
+\end{itemize}
+
+\subsection{The Heisenberg uncertainty principle} 
+Supose C and D are two observables and \ketp a quantum state. \\
+Then:
+\[\Delta(C) \cdot \Delta(D) \ge \frac{|\BraKet{[C, D]}}{2} \text{ \hspace{15pt} \textcolor{gray}{$[A, B] \coloneqq AB - BA$}}\]
+Interpretation for experiment: repeated preparation of \ketp, measure C in some cases and D in the other cases to obtain the standard deviations $\Delta(C)$ and $\Delta(D)$. \\
+\textcolor{gray}{
+    \begin{align*} 
+        \text{Remark: "popular statement: } C \; &\hat{=} \; \hat{x} \text{ (position operator)} \\
+         D \; &\hat{=} \; \hat{p} \text{ (momentum operator)}
+    \end{align*}
+    $\leadsto$ see handout Heisenberg-uncertainty-principle.pdf for derivation.
+}
