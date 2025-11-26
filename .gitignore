@@ -15,8 +15,8 @@
 *.vrb
 *.xdv
 
-# PDF build outputs (optional — comment this out if you want to track PDFs)
-# *.pdf
+# PDF build outputs
+*.pdf
 
 # Editor backups and temporary files
 *~
