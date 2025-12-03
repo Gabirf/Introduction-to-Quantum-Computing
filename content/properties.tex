@@ -1,6 +1,30 @@
 
 \section*{\underline{Properties}}
 
+\subsection*{Bra-Ket (Dirac) notation}
+\begin{itemize}
+    \item \underline{\textbf{Ket:}}
+        \begin{itemize}
+            \item \(\ketp + \ket{\varphi} = \ket{\psi + \varphi}\)
+            \item \(a \ketp = \ket{a \psi}\)
+        \end{itemize}
+
+        Righthand-side rules:
+        \begin{itemize}
+            \item \( \Braket{\psi \mid \varphi + \zeta} = \Braket{\psi \mid \varphi} + \Braket{\psi \mid \zeta}\)
+            \item \(\Braket{\psi \mid a\varphi} = a \Braket{\psi \mid \varphi}\)
+        \end{itemize}
+
+        Complex conjugate:
+        \begin{itemize}
+            \item \(\Braket{\psi \mid \varphi}^* = \Braket{\varphi \mid \psi}\)
+        \end{itemize}
+        
+        All left side rules can be build ontop of these (antilinearly)
+    \item Riesz Representation Theorem results in: \(\bra{\psi} \ket{\varphi} = \Braket{\psi \mid \varphi} = \psi \cdot \varphi\)
+\end{itemize}
+
+\subsection*{Matrices}
 \begin{itemize}
     \item \href{https://en.wikipedia.org/wiki/Normal_matrix}{\textbf{\underline{Normal matrix:}}}
 
@@ -28,5 +52,13 @@
         \item All eigenvalues are real.
         \item Eigenvectors corresponding to distinct eigenvalues are orthogonal.
         \item In real-valued matrices, “Hermitian” just means symmetric \((A = A^T)\)
+    \end{itemize}
+
+    \item \href{https://en.wikipedia.org/wiki/Pauli_matrices}{\textbf{\underline{Pauli matrices:}}} \\
+    All Pauli matrices \({M \in \{X, Y, Z\} }\) also notated as \({\sigma_i \mid i \in [3]}\) satisfy these properties:
+    \begin{itemize}[label=]
+        \item \(\sigma_j^2 = I\)
+        \item \(\sigma_j \sigma_k = -\sigma_k \sigma_j \; \; \forall j, k \in [3] \mid j \ne k\)
+        \item \([\sigma_j, \sigma_k] = \sigma_j \sigma_k - \sigma_k \sigma_j = 2i \sigma_l \; \; \forall (j, k, l) \in \mathrm{Cyc}(1, 2, 3)\)
     \end{itemize}
 \end{itemize}

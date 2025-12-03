@@ -11,6 +11,12 @@
 \usepackage{nicematrix}
 \usepackage{xparse, etoolbox}     % Allows for more elegant command solutions like 2 default values.
 \usepackage{xstring}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float} 
+
+%custom colors:
+\definecolor{forest}{RGB}{34, 139, 32}
 
 %specific to this project:
 \usepackage{braket} %allows to make quantum brackets with \bra \ket
@@ -66,7 +72,7 @@
 \NewDocumentCommand{\ketX}{O{1} O{0} m}{%
   \ensuremath{
   % --- Prefix Conditional (Argument #2) ---
-  \IfEq{#2}{1}{\frac{1}{\sqrt{2}}}{}%
+  \IfEq{#2}{1}{\frac{1}{\sqrt{2}}(}{}%
   % --- Main Switch (Argument #3) ---
   \IfEqCase{#3}{%
     {+}{%
@@ -87,6 +93,8 @@
     % ... other cases ...
   }[\ket{#3}]%
   }
+  % --- Prefix Conditional (Argument #2) ---
+  \IfEq{#2}{1}{)}{}%
 }
 
 \newcommand{\brap}[0]{\ensuremath{\bra{\psi}}}

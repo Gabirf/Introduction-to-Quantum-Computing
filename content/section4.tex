@@ -32,7 +32,7 @@ $U_f$ maps basis states to basis states and satisfies $U_f^2 = I ( q \oplus f(x)
 Thus $U_f$ permites basis states and is in particular unitary.\\
 
 \noindent
-Initialize the orcle in superpositions $\ket{-} = \ketX[1][1]{-}$, then
+Initialize the oracle in superpositions $\ket{-} = \ketX[1][1]{-}$, then
 \[\ket{x} \otimes \frac{\ketX{-}}{\sqrt{2}} \xmapsto{U_f} 
             \begin{cases}
                 \ket{x} \otimes \frac{\ketX{-}}{\sqrt{2}} \\
@@ -55,3 +55,154 @@ Example: factorisation of a large integer \(m \in N\): \\
 But testing whether a given $x \in \mathbb{N}$ divides m is simple. \\
 Can perform arithmetic operations for trial division on a digital quantum computer as well $\leadsto$ oracle which recognizes a solution x.
 \textcolor{gray}{(Remark: "better" quantum algorithm for integer factorisation: Shor's algorithm.)}
+
+
+\subsection{Grover's Algorithm}
+
+Search space with $N = 2^n$ element, M solutions Overall circuit diagramm for Grover's algorithm: \\
+Apply G $O(\sqrt{\frac{N}{M}})$ times.
+
+\vspace*{10pt}
+\begin{figure}[H]
+    \begin{center}
+        \begin{quantikz}
+            \lstick{$\ket{0, \hdots, 0}$} & \qwbundle{n} & \gate{H^{\otimes n}} & \gate[2]{G} & \gate[2]{G} & \ldots & \gate[2]{G} & \meter{} & \setwiretype{c} \\
+            \lstick{ow}                   &              &                      &             &             & \ldots &             &        
+        \end{quantikz}
+    \end{center}
+
+    \captionsetup{
+        justification=raggedright, % Aligns text to the left
+        singlelinecheck=false      % REQUIRED: prevents centering of short lines
+    }
+
+    \caption*{ow: oracle workspace (auxiliary qubit)\\
+    G: Groover operator\\}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{subfigure}[t]{0.4\textwidth}
+        \vspace*{0pt}
+        \noindent
+        \begin{quantikz}[baseline=(current bounding box.center)]
+            & \qwbundle{n} & \gate{H^{\otimes n}}
+        \end{quantikz} = \begin{quantikz}[baseline=(current bounding box.center)]
+            & \gate{H} & \\
+            & \gate{H} & \\
+            \setwiretype{n} & \vdots & \\
+            & \gate{H} & 
+        \end{quantikz}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.5\textwidth}
+        \vspace*{0pt}
+        \(H = \frac{1}{\sqrt{2}} \colvec{1 & 1 \\ 1 & -1}\)
+        \begin{flalign*}
+            \text{Note: } & H \ketz = \frac{1}{\sqrt{2}} (\ketX{+}) \\
+                          & H \keto = \frac{1}{\sqrt{2}} (\ketX{-})
+        \end{flalign*}
+        for \(x \in \{0, 1\} \) \\
+        \(H \ket{x} = \frac{1}{\sqrt{2}} \sumX_{z = 0}^1 (-1)^{z \cdot x} \ket{z}\)
+    \end{subfigure}
+\end{figure}
+
+\noindent
+Applied to several qubits:
+\begin{align*}
+    \underbrace{H^{\otimes n}}_{H \otimes H \otimes \hdots H} \ket{x_1, \hdots, x_n} = (H \ket{x_1}) \otimes \hdots \otimes (H \ket{x_n}) 
+    &\overset{(1)}{=} \frac{1}{\sqrt{2^n}} \sumX_{z_{1i} - z_n}^1 (-1)^{z_1 x_1 + \hdots + z_n x_n} \ket{z_1 \hdots z_n} \\
+    &= \frac{1}{\sqrt{2}} \sumX_{z=0}^{2^n - 1} (-1)^{x \cdot z} \ket{z} \; \; \; \mid \text{z is a bitstring}
+\end{align*}
+
+\noindent
+With: \\
+(1): \(H \ket{x_1} = {\frac{1}{\sqrt{2}} \sumX_{z_1 = 0}^1 (-1)^{z_1 x_1} \ket{z_1}}\) \\
+
+\noindent
+In particular: \(H^{\otimes n} \ket{0,\hdots, 0} = \frac{1}{\sqrt{N}} \sumX_{z = 0}^{N - 1} \ket{z} \eqqcolon \textcolor{forest}{\text{\ketp equal superposition state}}\) \\
+
+\newpage\noindent
+Definition of Grover operator G: \\
+
+\begin{quantikz}
+    \lstick{$\ket{x}$} & \qwbundle{n} & \gate[2]{G} & \\
+                       &              &             & 
+\end{quantikz} = \begin{quantikz}
+    & \gate[2]{U_f} & \gate{H^{\otimes n}} & \gate{ph. g.} & \gate{H^{\otimes n}} & \\
+    &               & \qw                    & \qw           & \qw                    &
+\end{quantikz}
+
+\noindent
+Captions: \\
+$U_f$ (oracle): \(\ket{x} \mapsto (-1)^{f(x)} \ket{x}\) \\
+ph. g. (phase gate): \(2 \ketz \braz - I = \begin{cases} \ketz \mapsto \ketz \\ \ket{x} \mapsto - \ket{x} for x \ne 0\end{cases}\) \\
+All single qubit gates together:
+
+\noindent
+\begin{flalign*}
+    H^{\otimes n} \cdot ( 2 \keto \brao - I ) \cdot H^{\otimes n} 
+    &= 2 \underbrace{(H^{\otimes n} \ketz)}_{\textcolor{forest}{\ketp}} \underbrace{(H^{\otimes n} \braz)}_{\textcolor{forest}{\brap}} - I &\\
+    &= 2 \textcolor{forest}{\ketp \brap} - I &
+\end{flalign*}
+
+\noindent
+In summary: \(G = (2\ketp \brap - I) \cdot U_f\) \\
+
+\vspace*{10pt} \noindent
+\underline{Geometric interpretation}\\
+Define:
+\begin{figure}
+    \begin{subfigure}{0.4\textwidth}
+        \begin{flalign*}
+            \ket{\alpha} &\coloneqq \frac{1}{\sqrt{N - M}} \sumX_{\substack{x = 0 \\ f(x) = 0}}^{N - 1} \ket{x} & \\
+            \ket{\beta} &\coloneqq \frac{1}{\sqrt{M}} \sumX_{\substack{x = 0 \\ f(x) = 1}}^{N - 1} \ket{x} &
+        \end{flalign*}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics*[width=0.5\textwidth]{assets/GeoInterGrover.png}
+    \end{subfigure}
+\end{figure}
+
+\noindent
+Angle \textcolor{forest}{$\theta$} is defined by \(sin(\frac{\theta}{2}) = \sqrt{\frac{M}{N}}\) such that:
+\[\textcolor{forest}{\ketp} = cos(\frac{\theta}{2}) \ket{\alpha} + sin(\frac{\theta}{2} \ket{\beta})\]
+Note: by definition \(U_f \ket{\alpha} = \ket{\alpha}, U_f \ket{\beta} = - \ket{\beta}\) \\
+$\leadsto \textcolor{purple}{U_f}$ is a \textcolor{purple}{reflection about $\ket{\alpha}$} within the subspace spanned by $\ket{\alpha}$ and $\ket{\beta}$. \\
+
+\noindent
+Likewise: \(\textcolor{forest}{2 \ketp \brap - I}\) is a \textcolor{forest}{reflection about \ketp} since \ketp is part of the subspace spanned by $\ket{\alpha}$ and $\ket{\beta}$ G leaves this subspace invariant! \\
+
+\noindent
+Thus G is a \textcolor{red}{rotation} by angle \textcolor{forest}{$\theta$}: \\
+\(\ket{\phi} cos(\varphi) \ket{\alpha} + sin(\varphi) \ket{\beta}\) \\
+\(\leadsto G \ket{\phi} = cos(\varphi + \textcolor{forest}{\theta}) \ket{\alpha} + sin(\varphi + \textcolor{forest}{\theta}) \ket{\beta}\) (\textcolor{gray}{see handout for algebraic derivation}) \\
+
+\begin{itemize}[label=]
+    \item For k applications of G: \\
+        \hspace*{5pt} \(G^k \ket{\phi} = cos(\varphi + k \cdot \theta) \ket{\alpha} + sin(\varphi + k \cdot \theta) \ket{\beta}\)
+    \item For initial state \(\ket{\phi} = \textcolor{forest}{\ketp}: \varphi = \frac{\theta}{2}\) \\
+        \hspace*{5pt} \(G^k \ket{\varphi} = cos((k + \frac{1}{2}) \theta) \ket{\alpha} + sin(k + \frac{1}{2}) \theta) \ket{\beta}\)
+    \item Goal: rotate to $\ket{\beta}$, i.e. \((k + \frac{1}{2} \theta) \overset{!}{=} \frac{\pi}{2}\)\\
+        \hspace*{5pt} since \(sin(\frac{\theta}{2}) = \sqrt{\frac{M}{N}} \overset{\text{for M $\ll$ N}}{\rightsquigarrow} \theta \approx 2 \sqrt{\frac{M}{N}}\)
+\end{itemize}
+
+\noindent
+Thus $O(\sqrt{\frac{N}{M}})$ rotations are needed $\begin{aligned}[t]
+    &: k + \frac{1}{2} \overset{!}{=} \frac{\pi}{2\theta}, k \overset{!}{=} \frac{\pi}{2\theta} - \frac{1}{2} \\
+    &\leadsto k = O(\sqrt{\frac{N}{M}}) \text{for N} \mapsto \infty
+\end{aligned}$
+
+\noindent
+Final step: standard measurement, will collapse quantum state (with high probabilitiy) to a basis state forming $\ket{\beta}$, i.e. a solution!
+
+\subsection{Optimality of the search algorithm}
+(Nielsen and Chuang section 6.6) \\
+
+\noindent
+Goal: show that any quantum search algorithm needs $\Omega(\sqrt{N})$ oracle calls $\leadsto O(\sqrt{N})$ is already optimal. \\
+
+\noindent
+For simplicity we assume a single solution x: \\
+Recall that oracle flips sign of solutions: \\
+\indent \(O_x = I - 2 \ket{x} \bra{x}\) (denoted $U_f$ in the previous section)

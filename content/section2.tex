@@ -37,7 +37,7 @@ Circuit notation: \\
 
     Recall the block sphere representation of a general quantum state:
     \[
-        \ketp = cos(\frac{\varphi}{2}) \ketz + i e^{i\varphi} sin(\frac{\varphi}{2}) \keto
+        \ketp = cos(\frac{\varphi}{2}) \ketz + e^{i\varphi} sin(\frac{\varphi}{2}) \keto
     \]
     Then: 
     \begin{align}
@@ -396,8 +396,8 @@ such that the probabilities sum to 1: \\
 \newpage \noindent
 Example: measurement of a qubit \ketp = \super with respect to computational basis \compbas:
 \begin{align*}
-    M_0 &\coloneqq \underbrace{\braz \ketz}_{\text{outer product}} = \colvec{1 \\ 0} \colvec{1 & 0} = \colvec{1 & 0 \\ 0 & 0} \\
-    M_1 &\coloneqq \brao \keto = \colvec{0 \\ 1} \colvec{0 & 1} = \colvec{0 & 0 \\ 0 & 1}
+    M_0 &\coloneqq \underbrace{\ketz \braz}_{\text{outer product}} = \colvec{1 \\ 0} \colvec{1 & 0} = \colvec{1 & 0 \\ 0 & 0} \\
+    M_1 &\coloneqq \keto \brao = \colvec{0 \\ 1} \colvec{0 & 1} = \colvec{0 & 0 \\ 0 & 1}
 \end{align*}
 \begin{align*}
     \leadsto & p(0) = \BraKet{M_0^\dagger M_0} = \BraKet{M_0} &&= \colvec{\alpha^* & \beta^*} \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix} \colvec{\alpha \\ \beta} \notag \\
@@ -434,7 +434,7 @@ Remarks:
 Average value of a projective measurement 
 \begin{align*}
     \mathbb{E}[M] = \sumX_m \lambda_m p(\lambda_m) & = \sumX_m \lambda_m \BraKet{P_m} \\ 
-    & = \BraKet{\sumX_m \lambda_m p_m} = \BraKet{M} \eqqcolon \braket{M} \hspace{10pt} | \text{if \ketp is clear from context.}
+    & = \BraKet{\sumX_m \lambda_m P_m} = \BraKet{M} \eqqcolon \braket{M} \hspace{10pt} | \text{if \ketp is clear from context.}
 \end{align*}
 
 \noindent
