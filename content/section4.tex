@@ -6,9 +6,9 @@ Classical search through N unordered elements: O(N) \\
 Quantum Groover's algorithm: O($\sqrt{N}$) (under certain preconditions)
 
 \subsection{Quantum oracles}
-search space of $N = 2^n$ elements, labelled 0, 1, $\hdots$, N-1. \\
+Search space of $N = 2^n$ elements, labelled 0, 1, $\hdots$, N-1. \\
 Assume there are M solutions (with $1 \le M \le N$) \\
-Define corresponding \underline{indicator function} \(f: {0, \hdots, N-1} \rightarrow {0,1}\)
+Define the corresponding \underline{indicator function} \(f: {0, \hdots, N-1} \rightarrow {0,1}\)
 \[
     f(x) = \begin{cases}
         0, & \text{if element x is \underline{not} a solution} \\
@@ -18,7 +18,7 @@ Define corresponding \underline{indicator function} \(f: {0, \hdots, N-1} \right
 
 \noindent
 Quantum version of f? \\
-$\leadsto$ quantum "oracle" Uf defined for computational basic states
+$\leadsto$ quantum "oracle" $U_f$ defined for computational basic states
 
 \begin{quantikz}
     \lstick{$\ket{x}$} & \qwbundle{n} & \gate[2]{U_f} && \rstick{$\ket{x}$( \textcolor{gray}{register of n quibits})}\\
@@ -27,7 +27,7 @@ $\leadsto$ quantum "oracle" Uf defined for computational basic states
 
 \noindent
 Notes: \\
-With \(x = x_{n-1} \hdots x_1 x_0 \Rightarrow \ket{x} = \ket{x_{n-1}} \hdots \ket{x_1} \ket{x}\).\\
+With \(x = x_{n-1} \hdots x_1 x_0 \Rightarrow \ket{x} = \ket{x_{n-1}} \hdots \ket{x_1} \ket{x_0}\).\\
 $U_f$ maps basis states to basis states and satisfies $U_f^2 = I ( q \oplus f(x) \oplus f(x) = q)$ \\
 Thus $U_f$ permites basis states and is in particular unitary.\\
 
@@ -48,20 +48,19 @@ Effective action of oracle:
 $\leadsto$ oracle "marks" solutions by a phase flip. \\
 
 \noindent
-How could one construct such and oracle without knowing the solution already?\\
+How could one construct such an oracle without knowing the solution already?\\
 Example: factorisation of a large integer \(m \in N\): \\
 \indent Finding prime factors of m is "difficult" on a classical computer: \\
 \indent (no known algorithm with polynomial runtime in the bitlength of m) \\
 But testing whether a given $x \in \mathbb{N}$ divides m is simple. \\
-Can perform arithmetic operations for trial division on a digital quantum computer as well $\leadsto$ oracle which recognizes a solution x.
+One can perform arithmetic operations for trial division on a digital quantum computer as well $\leadsto$ oracle which recognizes a solution x.
 \textcolor{gray}{(Remark: "better" quantum algorithm for integer factorisation: Shor's algorithm.)}
 
 
 \subsection{Grover's Algorithm}
 
-Search space with $N = 2^n$ element, M solutions Overall circuit diagramm for Grover's algorithm: \\
-Apply G $O(\sqrt{\frac{N}{M}})$ times.
-
+Search space with $N = 2^n$ element and M solutions; overall circuit diagramm for Grover's algorithm:
+(Apply G $O(\sqrt{\frac{N}{M}})$ times.)
 \vspace*{10pt}
 \begin{figure}[H]
     \begin{center}
@@ -128,17 +127,17 @@ Definition of Grover operator G: \\
     \lstick{$\ket{x}$} & \qwbundle{n} & \gate[2]{G} & \\
                        &              &             & 
 \end{quantikz} = \begin{quantikz}
-    & \gate[2]{U_f} & \gate{H^{\otimes n}} & \gate{ph. g.} & \gate{H^{\otimes n}} & \\
+    & \gate[2]{U_f} & \gate{H^{\otimes n}} & \gate{ph. \, g.} & \gate{H^{\otimes n}} & \\
     &               & \qw                    & \qw           & \qw                    &
 \end{quantikz}
 
 \noindent
 Captions: \\
-$U_f$ (oracle): \(\ket{x} \mapsto (-1)^{f(x)} \ket{x}\) \\
-ph. g. (phase gate): \(2 \ketz \braz - I = \begin{cases} \ketz \mapsto \ketz \\ \ket{x} \mapsto - \ket{x} for x \ne 0\end{cases}\) \\
-All single qubit gates together:
+\indent $U_f$ (oracle): \(\ket{x} \mapsto (-1)^{f(x)} \ket{x}\) \\
+\indent $ph. \, g.$ (phase gate): \(2 \ketz \braz - I = \begin{cases} \ketz \mapsto \ketz \\ \ket{x} \mapsto - \ket{x} for x \ne 0\end{cases}\) \\
 
-\noindent
+\vspace*{10pt}\noindent
+All single qubit gates together:
 \begin{flalign*}
     H^{\otimes n} \cdot ( 2 \keto \brao - I ) \cdot H^{\otimes n} 
     &= 2 \underbrace{(H^{\otimes n} \ketz)}_{\textcolor{forest}{\ketp}} \underbrace{(H^{\otimes n} \braz)}_{\textcolor{forest}{\brap}} - I &\\
@@ -174,7 +173,7 @@ $\leadsto \textcolor{purple}{U_f}$ is a \textcolor{purple}{reflection about $\ke
 Likewise: \(\textcolor{forest}{2 \ketp \brap - I}\) is a \textcolor{forest}{reflection about \ketp} since \ketp is part of the subspace spanned by $\ket{\alpha}$ and $\ket{\beta}$ G leaves this subspace invariant! \\
 
 \noindent
-Thus G is a \textcolor{red}{rotation} by angle \textcolor{forest}{$\theta$}: \\
+Thus G is a \textcolor{red}{rotation} by thed angle \textcolor{forest}{$\theta$}: \\
 \(\ket{\phi} cos(\varphi) \ket{\alpha} + sin(\varphi) \ket{\beta}\) \\
 \(\leadsto G \ket{\phi} = cos(\varphi + \textcolor{forest}{\theta}) \ket{\alpha} + sin(\varphi + \textcolor{forest}{\theta}) \ket{\beta}\) (\textcolor{gray}{see handout for algebraic derivation}) \\
 
