@@ -61,7 +61,7 @@ Circuit notation: \\
 \newpage
 \noindent Examples:
 \begin{itemize}
-    \item quantum analogue of classical NOT-gate (0 $ \leftrightarrow $ 1) flip $ \ket{0} \leftrightarrow \ket{1} \leadsto $ Pauli-X gate:
+    \item quantum analogue of classical NOT-gate (0 $ \leftrightarrow $ 1) flip $ \ket{0} \leftrightarrow \ket{1} \\ \leadsto $ Pauli-X gate:
 
     \[
         X \equiv \sigma_1 = \begin{pmatrix} 0 && 1 \\ 1 && 0 \end{pmatrix}
@@ -88,14 +88,14 @@ Circuit notation: \\
     The \underline{Pauli vector} $\Vec{\sigma} = (\sigma_1, \sigma_2, \sigma_3) = (x,y,z)$ is a vector of 2x2 matrices.
 
     \item Hadamard gate:
-    \[ H = \frac{1}{\Omega} \colvec{1 & 1 \\ 1 & -1}\] \\
+    \[ H = \frac{1}{\sqrt{2}} \colvec{1 & 1 \\ 1 & -1}\] \\
     \[\alpha \ketz + \beta \keto \qc{H} \alpha \frac{\ketz + \keto}{\sqrt{2}} + \beta \frac{\ketz - \keto}{\sqrt{2}}\]
 
     \item Phase gate:
     \[ S = \colvec{1 & 0 \\ 0 & i}\]
     \item T gate:
     \[ T = \colvec{1 & 0 \\ 0 & e^{i\frac{\pi}{4}}}\]
-    Note: $T^2 = S (\text{since }(e^{i\frac{\pi}{4}})^2 = e^{i\frac{\pi}{2}} = i$)
+    Note: $T^2 = S (\text{since }(e^{i\frac{\pi}{4}})^2 = e^{i\frac{\pi}{2}} = i) ; T^4 = S^2 = Z$
 \end{itemize}
 
 \vspace{10pt}
@@ -390,8 +390,8 @@ alternative notation:
 \end{quantikz} \\
 
 \newpage \noindent
-\underline{Unitary freedome of choice of measurement basis.} \\
-Given an orthonormal basis (ONB) $\{\ket{u_1}, \ket{u_2}\}$ can measure with respect to this orthonormal basis
+\underline{Unitary freedom of choice of measurement basis.} \\
+Given an orthonormal basis (ONB) $\{\ket{u_1}, \ket{u_2}\}$, we can measure with respect to this orthonormal basis
 by performing a base change before and after the measurement: \\
 \(
     U = (\ket{u_1} \ket{u_2}) \in \mC{2 \times 2} \; \text{unitary}
@@ -463,7 +463,7 @@ State of the quantum system after the measurement:
 \noindent
 Remarks:
 \begin{itemize}
-    \item Projective measurements are special cases of a general measurement framework.
+    \item Projective measurements are special cases of a general measurement framework
     \item Projective measurement combined with transformations (and auxiliary qubit) are equivalent to the general measurement formalism/framework.
           (Proof: see pages 94, 95 in Nielsen and Chuang)
 \end{itemize}
