@@ -1,5 +1,43 @@
 \section{Section 2}
 \subsection{Section 2.1}
+(Nielsen and Chuang section 1.2)\\
+
+\noindent
+Classical bits: 0, 1 \\
+Quantum bits "qubits": superposition of 0 and 1 \\
+
+\noindent
+A quantum state \ketp is described as
+\[ \ketp = \super, \alpha, \beta \in \mathbb{C}\]
+with \(|\alpha|^2 + |\beta|^2 = 1\) (normalisation) \\
+
+\noindent
+ket-notation: \ketp \; (motivation from inner product) \\
+Mathematical description: \(\ketp \in \mathbb{C}^2\), with
+\[\ketz = \colvec{1 \\ 0}, \; \keto = \colvec{0 \\ 1}, \; \ketp = \colvec{\alpha \\ \beta}\]
+
+\noindent
+Different from a classical bit, one cannot (in general) directly ovserve/measure a qubit (the amplitudes $\alpha$ and $\beta$).\\\\
+Instead "standard measurement" will result in:
+\begin{flalign*}
+    \hspace*{25pt}  & 0 \text{ with probability } |\alpha|^2. &\\
+                    & 1 \text{ with probability } |\beta|^2.  &
+\end{flalign*}
+
+\noindent
+The measurement also \underline{changes} the qubit ("wavefunction collapse"):\\
+If meausuring 0, the qubit  will be \(\ketp = \ketz\) directly after the measurement, and likewise if measuring 1, the
+qubit will be \(\ketp = \keto\). \\
+
+\noindent
+In practice: One can estimate the probabilities $|\alpha|^2$ and $|\beta|^2$ in experiments by replicating the same experiment many times (i.e. via outcomes satistics). \\
+The repetitions are called "trials" or "shots". \\
+Circuit notation:
+\begin{quantikz}
+    \lstick{\textcolor{forest}{\ketp}} & \meter{} & \setwiretype{c} && \wire[l][1]["\text{classical info}"{above}]{c} &
+\end{quantikz} \begin{quantikz}
+    \lstick{\textcolor{forest}{\ketp}} & \meter{} & \rstick{\textcolor{forest}{collapsed}}
+\end{quantikz}
 
 \subsection{Single qubit gates}
 (Nielsen and Chang sections 1.3.1, 2.1.8, 4.2) \\
