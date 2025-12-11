@@ -204,4 +204,97 @@ Goal: show that any quantum search algorithm needs $\Omega(\sqrt{N})$ oracle cal
 \noindent
 For simplicity we assume a single solution x: \\
 Recall that oracle flips sign of solutions: \\
-\indent \(O_x = I - 2 \ket{x} \bra{x}\) (denoted $U_f$ in the previous section)
+\indent \(O_x = I - 2 \ket{x} \bra{x}\) (denoted $U_f$ in the previous section) \\
+
+\noindent
+Most general form of algorithm: oracle calls interleaved with unitary operations $U_1, U_2, \hdots$ \\
+
+\noindent
+State after k steps: \\
+\indent \(\ket{\psi_k^x} = U_k O_x \, U_{k-1} O_x \, \hdots \, U_1 \ket{\psi_0}\) | with $\ket{\psi_0} = $ initial state \\
+
+\noindent
+We also define: \\
+\indent \(\ket{\psi_k} = U_k U_{k-1} \hdots U_0 \ket{\psi_0}\) \\
+
+\noindent
+Strategy of proof: upper bound of 
+\[D_k \coloneqq \sumX_{x = 0}^{N - 1} \norm{\ket{\psi_k^x} - \ket{\psi_k}}^2\]
+$D_k$ grows as $O(k^2)$, but must be $\Omega(N)$ to distinguish between N alternatives. \textcolor{gray}{(see below)} \\
+
+\noindent \setcounter{equation}{0} 
+The following equations and inequalities are going to be used in the proof bellow:
+\begin{flalign}
+    \text{Unitary Norm: } &\norm{U} = 1 \Rightarrow \norm{U_{k + 1} \ket{x}} = \norm{\ket{x}} \label{eq:unitary_norm} \\
+    \text{Spec. Cauchy-Sch.: }&\norm{b + c}^2 = \braket{b + c, b + c} \le \norm{b}^2 + 2 \norm{b} \cdot \norm{c} + \norm{c}^2 \label{eq:special_Cauchy-Schwarz} \\
+    \text{Cauchy-Schwarz: } &\sumX_x u_x \cdot v_x \le \norm{u} \cdot \norm{v} \label{eq:Cauchy-Schwarz}
+\end{flalign}
+
+\noindent
+First show that \(D_k \le 4 k^2\) by induction:
+\begin{flalign*}
+    k = 0:& \hspace{10pt}   &  D_0 &= 0 &\\
+    k \mapsto k + 1:&       &   &       &\\
+    &                       &   D_{k + 1} &= \sumX_{x=0}^{N - 1} \big\|\underbrace{U_{k+1} O_x \ket{\psi_k^x} - U_{k+1} \ket{\psi_k}}_{\textcolor{gray}{U_{k + 1} (O_x \ket{\psi_k^x} - \ket{\psi_k})}}\big\|^2             &\\
+    &                       &   &\overset{\eqref{eq:unitary_norm}}{=} \sumX_{x=0}^{N - 1} \norm{O_x \ket{\psi_k^x} - \ket{\psi_k}}^2    &\\
+    &                       &   &= \sumX_{x=0}^{N - 1} \big\|\underbrace{O_x (\ket{\psi_k^x} - \ket{\psi_k})}_{\eqqcolon b} + \underbrace{(O_x - I) \ket{\psi_k}}_{-2 \ket{x} \Braket{x | \psi_k} \eqqcolon c}\big\|^2      &\\
+    &                       &   &\overset{\eqref{eq:special_Cauchy-Schwarz}}{\le} \sumX_{x=0}^{N - 1} (\norm{b}^2 + 2 \norm{b} \cdot \norm{c} + \norm{c}^2) \hspace{25pt}| \; O_x \text{ is unitary}                        &\\
+    &                       &   &= \sumX_{x=0}^{N - 1} (\norm{\ket{\psi_k^x} - \ket{\psi_k}}^2 + 4 \norm{\ket{\psi_k^x} - \ket{\psi_k}} \cdot \abs{\Braket{x | \psi_k}} + 4 \abs{\Braket{x | \psi_k}})                    &\\
+    &                       &   &\overset{\eqref{eq:Cauchy-Schwarz}}{\le} D_k + 4 \underbrace{(\sumX_{x = 0}^{N - 1} \norm{\ket{\psi_k^x} - \ket{\psi_k}}^2)^{\frac{1}{2}}}_{\textcolor{gray}{\norm{u}}} \cdot \underbrace{(\sumX_{x = 0}^{N - 1} \abs{\braket{x | \psi_k}}^2)^{\frac{1}{2}}}_{\textcolor{gray}{\norm{v} = 1}} + 4   &\\
+    &                       &   &= D_k + 4 \sqrt{D_k} + 4   &\\
+    &                       &   &\overset{\mathrlap{\kern-0.5em I.H.}}{\le} 4k^2 + 4 \sqrt{4k^2} + 4   &\\
+    &                       &   &= 4(k + 1)^2
+\end{flalign*}
+
+\newpage \noindent
+Second part of the proof: $D_x$ must be in $\Omega(N)$: \\
+
+\begin{adjustwidth}{2em}{0pt}
+
+    \noindent
+    For the next proof step we will need the following equations and inequalities:
+    \begin{flalign}
+        & Re(z) \le \abs{z} \; \forall z \in \mathbb{C} & \label{eq:Rez}
+    \end{flalign}
+
+    \noindent
+    To find a solution x, we want that \(\ket{\psi_k^x} \sim \ket{x}\) suppose that \(\abs{\braket{x | \psi_k^x}}^2 \ge \textcolor{blue}{\frac{1}{2}} \; \forall x\). \\
+    \indent \textcolor{gray}{(probability of success is at least 50\%)} \\
+
+    \noindent
+    w.l.o.g. \(\braket{x | \psi_k^x} = \abs{\braket{x | \psi_k^x}}\) (can multiply $\ket{x}$ by phase factor)
+    \begin{flalign*}
+        \leadsto \norm{\ket{\psi_k^x} - \ket{x}}^2  &= \norm{\ket{\psi_k^x}}^2 - 2\braket{x | \psi_k^x} +\norm{\ket{x}}^2 &\\
+                                                    &= 2 - 2 \underbrace{\braket{x | \psi_k^x}}_{\textcolor{blue}{\le \frac{1}{\sqrt{2}}}} &\\
+                                                    &\le 2 - \sqrt{2}
+    \end{flalign*}
+
+    \noindent
+    Therefore: \\
+    \indent \(E_k \coloneqq \sumX_{x=0}^{N-1} \norm{\ket{\psi_k^x} - \ket{x}} \le (2 - \sqrt{2}) \cdot N\) \\
+
+    \noindent
+    Define \(F_k \coloneqq \sumX_{x = 0}^{N - 1} \norm{\ket{x} - \ket{\psi_k}}^2\), then
+    \begin{flalign*}
+        \hspace{15pt} F_k &= \sumX_{x = 0}^{N - 1} ( \norm{\ket{x}} - 2 Re\braket{x | \psi_k} + \norm{\ket{psi_k}}^2) &\\
+        &\overset{\eqref{eq:Rez}}{\ge} 2 \cdot N - 2 \sumX_{x = 0}^{N -1} \underbrace{\abs{\braket{x | \psi_k}}}_{\textcolor{gray}{u_x}} \cdot \underbrace{1}_{\textcolor{gray}{v_x}} &\\
+        &\overset{\eqref{eq:Cauchy-Schwarz}}{\ge} 2 \cdot N - 2 [(\underbrace{\sumX_x \abs{\braket{x | \psi_k}}^{\frac{1}{2}}}_{\textcolor{gray}{1}})^2 \cdot (\underbrace{\sumX_x 1}_{\textcolor{gray}{N}})^{\frac{1}{2}}] \\
+        &= 2 \cdot N - 2 \sqrt{N}
+    \end{flalign*}
+    \begin{flalign*}
+        \hspace{15pt} D_k   &= \sumX_{x = 0}^{N - 1} \norm{(\ket{\psi_k^x} - \textcolor{orange}{\ket{x}}) + (\textcolor{orange}{\ket{x}} - \ket{\psi_k}) }^2 &\\
+                            &\ge \sumX_{x = 0}^{N - 1} (\norm{\ket{\psi_k^x} - \ket{x}} - 2 \norm{\ket{\psi_k^x} - \ket{x}} \cdot \norm{\ket{x} - \ket{\psi_k}}^2 + \norm{\ket{x} - \ket{\psi_k}}^2) &\\
+                            &= E_k + F_k - 2 \sumX_{x = 0}^{N -1} \underbrace{\norm{\ket{\psi_k^x} - \ket{x}}}_{\textcolor{gray}{\eqqcolon a_x}} \cdot \underbrace{\norm{\ket{x} - \ket{\psi_k}}}_{\textcolor{gray}{\eqqcolon b_x}} &\\
+                            &\ge E_k + F_k - 2 \underbrace{\sqrt{E_k}}_{\textcolor{gray}{\norm{a}}} \cdot \underbrace{\sqrt{F_k}}_{\textcolor{gray}{\norm{a}}}  = (\sqrt{F_k} - \sqrt{E_k})^2 &\\
+                            &\ge (\sqrt{2N - 2\sqrt{N}} - \sqrt{(2 - \sqrt{2}) N} \; )^2 &\\
+                            &= N \cdot (\sqrt{2} - \sqrt{2 - \sqrt{2}})^2 &\\
+                            &= N (\sqrt{2 - \frac{2}{\sqrt{N}}} - \sqrt{2 - \sqrt{2}} \; )^2 \hspace*{20pt} | \text{ with } \lim_{N \to \infty} \frac{2}{\sqrt{N}} \to 0 &\\
+                            &\cong N \cdot \underbrace{(\sqrt{2} - \sqrt{2 - \sqrt{2}})^2}_{\eqqcolon c \, \approx \, 0.42} &\\
+                            &= c \cdot N 
+    \end{flalign*}
+\end{adjustwidth}
+
+\noindent
+In summary: 
+\[ \underbrace{D_k \le 4 k^2 \text{ and } D_k \ge cN}_{k \ge \sqrt{\frac{cN}{4}}} \]
+with k being the number of oracle evaluations. \\

@@ -1,4 +1,4 @@
-\usepackage{graphicx}   % Required for inserting images
+\usepackage{graphicx}           % Required for inserting images
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsfonts}
@@ -9,11 +9,12 @@
 \usepackage{hyperref}
 \usepackage{subfiles}
 \usepackage{nicematrix}
-\usepackage{xparse, etoolbox}     % Allows for more elegant command solutions like 2 default values.
+\usepackage{xparse, etoolbox}   % Allows for more elegant command solutions like 2 default values.
 \usepackage{xstring}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{float} 
+\usepackage{changepage}         % To indent blocks
 
 %custom colors:
 \definecolor{forest}{RGB}{34, 139, 32}
@@ -29,6 +30,7 @@
 \newcommand{\sinphihalf}[1]{\sinhalf{\varphi}}
 \newcommand{\cosphihalf}[1]{\coshalf{\varphi}}
 \newcommand{\mC}[1]{\mathbb{C}^{#1}}
+\newcommand{\abs}[1]{\left| #1 \right|}
 
 %linalg commands:
 \newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
