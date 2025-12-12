@@ -15,6 +15,7 @@
 \usepackage{subcaption}
 \usepackage{float} 
 \usepackage{changepage}         % To indent blocks
+\usepackage{xspace}             % allows for spacing in ensuremath
 
 %custom colors:
 \definecolor{forest}{RGB}{34, 139, 32}
@@ -25,8 +26,8 @@
 
 %general math commands:
 \newcommand{\sumX}{\displaystyle\sum}
-\newcommand{\sinhalf}[1]{\sin(\frac{#1}{2})}
-\newcommand{\coshalf}[1]{\cos(\frac{#1}{2})}
+\newcommand{\sinhalf}[1]{\sin\!\left( \frac{#1}{2} \right)}
+\newcommand{\coshalf}[1]{\cos\!\left( \frac{#1}{2} \right)}
 \newcommand{\sinphihalf}[1]{\sinhalf{\varphi}}
 \newcommand{\cosphihalf}[1]{\coshalf{\varphi}}
 \newcommand{\mC}[1]{\mathbb{C}^{#1}}
@@ -49,25 +50,25 @@
 \newcommand*{\expec}[1][]{\ensuremath{\mathbb{E}[#1]}}
 
 %specific new commands for this project:
-\newcommand{\ketz}[0]{\ensuremath{\ket{0}}}
-\newcommand{\keto}[0]{\ensuremath{\ket{1}}}
-\newcommand{\ketzz}[0]{\ensuremath{\ket{00}}} 
-\newcommand{\ketzo}[0]{\ensuremath{\ket{01}}}
-\newcommand{\ketoz}[0]{\ensuremath{\ket{10}}}
-\newcommand{\ketoo}[0]{\ensuremath{\ket{11}}}
+\newcommand{\ketz}[0]{\ensuremath{\ket{0}}\xspace}
+\newcommand{\keto}[0]{\ensuremath{\ket{1}}\xspace}
+\newcommand{\ketzz}[0]{\ensuremath{\ket{00}}\xspace} 
+\newcommand{\ketzo}[0]{\ensuremath{\ket{01}}\xspace}
+\newcommand{\ketoz}[0]{\ensuremath{\ket{10}}\xspace}
+\newcommand{\ketoo}[0]{\ensuremath{\ket{11}}\xspace}
 
-\newcommand{\braz}[0]{\ensuremath{\bra{0}}}
-\newcommand{\brao}[0]{\ensuremath{\bra{1}}}
-\newcommand{\brazz}[0]{\ensuremath{\bra{00}}} 
-\newcommand{\brazo}[0]{\ensuremath{\bra{01}}}
-\newcommand{\braoz}[0]{\ensuremath{\bra{10}}}
-\newcommand{\braoo}[0]{\ensuremath{\bra{11}}}
+\newcommand{\braz}[0]{\ensuremath{\bra{0}}\xspace}
+\newcommand{\brao}[0]{\ensuremath{\bra{1}}\xspace}
+\newcommand{\brazz}[0]{\ensuremath{\bra{00}}\xspace} 
+\newcommand{\brazo}[0]{\ensuremath{\bra{01}}\xspace}
+\newcommand{\braoz}[0]{\ensuremath{\bra{10}}\xspace}
+\newcommand{\braoo}[0]{\ensuremath{\bra{11}}\xspace}
 
-\newcommand{\tbra}[1]{\ensuremath{\bra{#1}}}
-\newcommand{\tket}[1]{\ensuremath{\ket{#1}}}
+\newcommand{\tbra}[1]{\ensuremath{\bra{#1}}\xspace}
+\newcommand{\tket}[1]{\ensuremath{\ket{#1}}\xspace}
 
-\newcommand{\ketp}[0]{\ensuremath{\ket{\psi}}}
-\newcommand{\ketpp}[0]{\ensuremath{\ket{\psi'}}}
+\newcommand{\ketp}[0]{\ensuremath{\ket{\psi}}\xspace}
+\newcommand{\ketpp}[0]{\ensuremath{\ket{\psi'}}\xspace}
 
 
 % #1 decides the dimentions of the kets #2 is a boolian for normalisation of sqrt2 or not #3 actual ket body with some extra features

@@ -32,12 +32,64 @@ qubit will be \(\ketp = \keto\). \\
 \noindent
 In practice: One can estimate the probabilities $|\alpha|^2$ and $|\beta|^2$ in experiments by replicating the same experiment many times (i.e. via outcomes satistics). \\
 The repetitions are called "trials" or "shots". \\
+
+\noindent
 Circuit notation:
-\begin{quantikz}
-    \lstick{\textcolor{forest}{\ketp}} & \meter{} & \setwiretype{c} && \wire[l][1]["\text{classical info}"{above}]{c} &
-\end{quantikz} \begin{quantikz}
-    \lstick{\textcolor{forest}{\ketp}} & \meter{} & \rstick{\textcolor{forest}{collapsed}}
-\end{quantikz}
+\begin{center}
+    \begin{quantikz}
+        \lstick{\textcolor{forest}{\ketp}} & \meter{} & \setwiretype{c} && \wire[l][1]["\text{classical info}"{above}]{c} &
+    \end{quantikz} \begin{quantikz}
+        \lstick{\textcolor{forest}{\ketp}}  & \meter{} \wire[d][1]{c} & \rstick{\textcolor{forest}{collapsed}} \\
+                                            & \setwiretype{c} &
+    \end{quantikz}
+\end{center}
+
+\noindent
+What is a qubit physicaly?
+\begin{adjustwidth}{2em}{0pt}
+    Many possible realizations, e.g. \ketz and \keto are:
+    \begin{itemize}
+        \item two different polarizations of a photon, e.g. left/right circular.
+        \item alignment of a nuclear or eletronic spin: \(\uparrow, \downarrow\).
+        \item ground state or excited state of an atom (electronic state).
+        \item clockwise or counter-clockwise loop current states in a Josephson junction "superconducting qubit".
+    \end{itemize}
+\end{adjustwidth}
+
+\hspace{10pt} 
+
+\noindent
+A useful graphical depiction of a qubit is the \underline{Bloch sphere} representation: \\
+If $\alpha$ and $\beta$ happen to be real-valued, then we can find an angle \(\theta \in \mathbb{R}\) such that:
+(TODO: make figure and split math and added Bloch sphere)
+\[\alpha = \coshalf{\theta}, \beta = \sinhalf{\theta}\]
+\[(\leadsto \abs{\alpha}^2 + \abs{\beta}^2 = \coshalf{\theta}^2 + \sinhalf{\theta}^2 = 1 \; \textcolor{forest}{\checkmark})\]
+
+\noindent
+In general we represent $\alpha$, $\beta$, (TODO: Add figure with Im Re sphere)
+\begin{align*}
+    \alpha  &= e^{i \gamma} \coshalf{\theta} \\
+    \beta   &= e^{i(\gamma + \varphi)} \sinhalf{\theta} 
+\end{align*}
+using so-called phase angles $\gamma$ for $\alpha$ and \(\gamma + \varphi\) for $\beta$. \\
+
+\noindent
+Then:
+\begin{align*}
+    \ketp   &= e^{i \gamma} \coshalf{\theta} \ketz + e^{i(\gamma + \varphi)} \sinhalf{\theta} \keto \\
+            &= e^{i \gamma} (\coshalf{\theta} \ketz + e^{i \varphi} \sinhalf{\theta} \keto)
+            &| \; e^{i \gamma} \text{ can be ignored here }
+\end{align*}
+
+\noindent
+Thus \ketp is characterized by two angles $\theta$ and $\varphi$.\\
+(TODO: start figure split here with Boch sphere)\\
+They specify the point defined as:
+\begin{flalign*}
+    \vec{r} \colvec{cos(\varphi) sin(\theta) \\ sin(\varphi) sin(\theta) \\ cos(\theta)}
+\end{flalign*}
+on the surface of a sphere specifically a \underline{Bloch sphere} (Felix Bloch). \\
+\textcolor{gray}{Exercice: why are \ketz and \keto at the poles?}
 
 \subsection{Single qubit gates}
 (Nielsen and Chang sections 1.3.1, 2.1.8, 4.2) \\
@@ -52,8 +104,6 @@ Circuit notation: \\
         \lstick{\ketp} && \gate{U} && \rstick{\ketpp}
     \end{quantikz} 
 \end{center}
-
-%todo finish lecture 1
 
 
 \noindent Notes: 
