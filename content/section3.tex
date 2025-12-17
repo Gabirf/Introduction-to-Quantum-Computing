@@ -139,7 +139,7 @@ Example:
             \end{align*}
 
             \noindent
-            If Alice measures eigenvalue 1, the wavefunction will collapse t $\ket{+-} \leadsto$ Bob'squbit is in state $\ket{-}$.\\
+            If Alice measures eigenvalue 1, the wavefunction will collapse to $\ket{+-} \leadsto$ Bob's qubit is in state $\ket{-}$.\\
             So he will certainly measure eigenvalue (-1). (conversly if Alice measures -1)
     
     \item general observable $\vec{v} \circ \vec{\sigma}$, general unit vector $\vec{v} \in \mathbb{R}^3:$ denote the orthogonal eigenstates of $\vec{v} \circ \vec{\sigma}$ by $\ket{a}, \ket{b},$ then there exist complex numbers $\alpha, \beta, \gamma$ and $\delta$ such that:
@@ -177,7 +177,7 @@ Experimental schematic: many repetitions (to collecect satistics of the followin
 
 \begin{itemize}
     \item Charlie: prepares two particles one for Alice and one for Bob.
-    \item Alice: decides randomly whether to measure Q or B.
+    \item Alice: decides randomly whether to measure Q or R.
     \item Bob: decides randomly whether to measure S or T.
 \end{itemize}
 
@@ -187,9 +187,9 @@ Alice and Bob perform their measurement (almost) simultaniously, such that no in
 After this protocol, Alice and Bob meet to analyze their measurement data. \\
 Consider the quantity:
 \[Q \cdot S + R \cdot S + R \cdot T - Q \cdot T = \underbrace{(Q + R)}_{\pm 2 \; \lor \; 0} \cdot S + \underbrace{(R - Q)}_{0 \; \lor \; \pm 2}\cdot T = \pm 2\]
-Denote by p(q,r,s,t) the proability that the syste before this measurements is in the state \{Q = q, R = r, S = s, T = t\}, then we compute the average value:
+Denote by p(q,r,s,t) the proability that the system is in the state \{Q = q, R = r, S = s, T = t\} before this measurements , then we compute the average value:
 \begin{align*}
-    \expec[Q \cdot S + R \cdot S + R \cdot T - Q \cdot T] &= \sumX_{p, r, s, t \in {\pm 1}} p(q, r, s, t) \cdot \underbrace{(1 \cdot s + r \cdot s + r \cdot t - q \cdot t)}_{\pm 2} \\ &\le \sumX_{p, r, s, t \in {\pm 1}} p(q, r, s, t) \cdot 2 = 2
+    \expec[Q \cdot S + R \cdot S + R \cdot T - Q \cdot T] &= \sumX_{p, r, s, t \in {\pm 1}} p(q, r, s, t) \cdot \underbrace{(q \cdot s + r \cdot s + r \cdot t - q \cdot t)}_{\pm 2} \\ &\le \sumX_{p, r, s, t \in {\pm 1}} p(q, r, s, t) \cdot 2 = 2
 \end{align*}
 By linearity of \expec[], we arrive at the following: \\
 

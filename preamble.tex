@@ -2,6 +2,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsfonts}
+\usepackage{amsthm}
 \usepackage{enumitem}
 \usepackage{titling}
 \usepackage{tikz}
@@ -32,6 +33,7 @@
 \newcommand{\cosphihalf}[1]{\coshalf{\varphi}}
 \newcommand{\mC}[1]{\mathbb{C}^{#1}}
 \newcommand{\abs}[1]{\left| #1 \right|}
+\DeclareMathOperator{\tr}{tr}
 
 %linalg commands:
 \newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
@@ -138,4 +140,6 @@
         \end{pmatrix}
     }
 }
+
+\newcommand{\densop}{\ensuremath{\sumX_i p_i \ket{\psi_i} \bra{\psi_i}}}
 
