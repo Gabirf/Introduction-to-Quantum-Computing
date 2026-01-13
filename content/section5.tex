@@ -1,0 +1,280 @@
+\section{The density operator}
+
+\noindent
+So far the state vector \ketp \,described a quantum state. 
+A convenient alternative formulation for quantum systems about which we have only partial information is the 
+\underline{density operator} (also called \underline{density matrix}).
+
+
+\subsection{Ensembles of quantum states}
+(Nielsen and CHuang section 2.4.1) \\
+
+\noindent
+Consider a quantum system which is in one of several states $\ket{\psi_i}$ with probability $\textcolor{blue}{p_i}$, 
+this defines an \underline{ensemble} of quantum states \(\{p_i, \ket{\psi_i}\}\). \\
+The \underline{density operator} $\rho$ of the ensemble \( \{ p_i, \ket{\psi_i} \} \) is defined as: \\
+\[\rho = \sumX_i \textcolor{blue}{p_i} \ket{\psi_i} \bra{\psi_i}\]
+
+\noindent
+Quantum mechanichs in terms of the density operator:
+% \begin{adjustwidth}{2em}{0pt}
+% \end{adjustwidth}
+\begin{itemize}
+    \item unitary operations: a unitary transformation U maps \(\ket{\psi_i} \mapsto U \cdot \ket{\psi_i}\), and the ensemble
+            to \(\{p_i, U \ket{\psi_i}\}\). \\
+            Thus the density operator is transformed as:
+            \[\rho \overset{U}{\mapsto} \sumX_i p_i \, U \ket{\psi_i} \underbrace{\bra{\psi_i} U^\dagger}_{\textcolor{gray}{= (U \ket{\psi_i})^\dagger}} 
+            = U (\densop) U^\dagger = U \rho \, U^\dagger\]
+    
+    \item measurement: measurement operators $\{M_m\}$, if the system is in the state $\ket{\psi_i}$, 
+            then the probability for the result m, given by i, is 
+            \[\textcolor{forest}{p(m | i)} = \BraKet[\psi_i]{M_m^\dagger M_m}\]
+            with: \(\BraKet{A} = \tr[A \ketp \brap]\) and  \(\tr[A \cdot B \cdot C] = tr[B \cdot C \cdot A] = \tr[C \cdot A \cdot B]\)
+            \[\Rightarrow \tr[M_m^\dagger M_m \ket{\psi_i} \bra{\psi_i}] \textcolor{gray}{\; = \norm{M_m \ket{\psi_i}}^2}\]
+            Thus the overall probability for the result m is:
+            \begin{flalign*}
+                p(m) &= \sumX_i \textcolor{forest}{p(m | i)} \; \textcolor{blue}{p_i} = \sumX_i \tr[M-m^\dagger M_m \ket{\psi_i} \bra{\psi_i}] \cdot p_i \\
+                &= \tr[M_m^\dagger M_m \densop] = \tr[M_m^\dagger M_m \rho]
+            \end{flalign*}
+            Density operator $\rho_m$ after obtaining result m? \\
+            State i collapses as follows: \(\ket{\psi_i} \mapsto \frac{M_m \ket{\psi_i}}{\norm{M_m \ket{\psi_i}}} \eqqcolon = \ket{\psi_i^m}\) \\
+            Thus: \setcounter{equation}{0} 
+            \begin{adjustwidth}{2em}{0pt}
+                With:
+                \begin{flalign}
+                    \text{(Baye's theorem): }& P(A | B) = \frac{P(A \cap B)}{P(B)} = \frac{P(B | A)}{P(B)}& \label{eq:Bayes}
+                \end{flalign}
+            \end{adjustwidth}
+            \begin{flalign*}
+                \rho_m  &= \sumX_i p(i | m) \cdot \ket{\psi_i^m} \bra{\psi_i^m} \ = \sumX_i p(i | m) \frac{M_m \ket{\psi_i} \bra{\psi_i} M_m^\dagger}{\norm{M_m \ket{\psi_i}}^2} &\\
+                        &\overset{\eqref{eq:Bayes}}{=} \sumX_i \textcolor{blue}{p_i} \frac{M_m \ket{\psi_i} \bra{\psi_i} M_m^\dagger}{p(m)} = \fcolorbox{orange}{white}{$\displaystyle \frac{M_m \rho M_m^\dagger}{\tr[M_m^\dagger M_m \rho]}$}&
+            \end{flalign*}
+            Note that $\rho_m$ is now expressed in terms of $\rho$ and the measurement operators, without explicit reference to the ensemble \(\{p_i, \ket{\psi_i}\}\)
+\end{itemize}
+
+\subsection{General properties of the density operator}
+(Nielsen and Chuang section 2.4.2) \\
+
+{
+    \color{blue} % Switch color to blue for this block
+    \noindent
+    Characterization of density operators: An operator $\rho$ is the density matrix associated to some ensemble $\{p_i, \ket{\psi_i} \}$ if and only if:
+    \begin{enumerate}
+        \item $\tr[\rho] = 1$ (trace condition)
+        \item $\rho$ is a positive operator (positive condition) % Added $ around \rho
+    \end{enumerate}
+}
+
+\noindent
+Remark: $\rho$ is called a \underline{positve operator} if it is Hermitian and all its eigenvalues are $\ge 0$, 
+equivalently if \(\BraKet[\varphi]{\rho} \ge 0\) for a vectors $\ket{\varphi}$.
+
+\noindent
+\begin{proof}
+    \begin{flalign*}
+        "\Rightarrow"   &\text{Suppose } \rho = \densop \text{, then} \\
+                        &\tr[\rho] = \sumX_i p_i \tr[\ket{\psi_i} \bra{\psi_i}] = \sumX_i p_i \BraKet[\psi_i]{} = 1 \hspace{10pt} | \sumX_i p_i = 1 \text{ (prob. distr.)} \\
+                        &\text{and for any state } \ket{\varphi}: \\
+                        &\BraKet[\varphi]{\rho} = \sumX_i p_i \braket{\varphi | \psi_i} \braket{\psi_i | \varphi} 
+                        = \sumX_i p_i \underbrace{\abs{\braket{\varphi | \psi_i}}^2}_{\ge 0} \ge 0 \\
+        "\Leftarrow"    &\rho \text{ is an operator (i.e. a Hermition matrix) } \rightarrow \text{ by spectral theorem:} \\
+                        &\text{There exist eigenvalues } \lambda_j \text{ and corresponding orthonormal eigen vectors} \ket{\varphi_j} \text{ such that:} \\
+                        &\hspace*{20pt} \rho = \sumX_j \lambda_j \ket{\varphi_j} \bra{\varphi_j}. \\
+                        &\text{Since } \rho \text{ satisfies the trace condition:} \\
+                        &\indent 1 = \tr[\rho] = \sumX_j \lambda_j \tr[\ket{\varphi_j} \bra{\varphi_j}] = \sumX_j \lambda_j \braket{\varphi_j | \varphi_j} = \sumX_j \lambda_j \\
+                        &\indent \text{Due to positivity of } \rho: \lambda_j \ge 0, \forall j \\
+                        &\indent \text{Thus we can interpret eigenvalues } \lambda_j \text{ as probabilities } \leadsto \\
+                        &\indent \{ \lambda_j, \ket{\varphi_j} \} \text{ is an ensemble which gives rise to } \rho.
+    \end{flalign*}
+\end{proof}
+
+\noindent
+From now on, we define a density operator as positive operator $\rho$ with \(\tr[\rho] = 1\). \\
+
+\noindent
+Language regarding density operators:
+\begin{figure}[H]
+    \begin{subfigure}[t]{0.475\textwidth}
+        {\centering \underline{"pure state"} \\ }
+        Quantum system in a state \ketp, with the corresponding density operator:
+        \[\rho = \ketp \brap\]
+        such that:
+        \[\tr[\rho^2] = \tr[\ketp \BraKet{} \brap] = \BraKet{} = 1\]
+    \end{subfigure} \hfil \begin{subfigure}[t]{0.46\textwidth}
+        {\centering \underline{"mixed state"} \\}
+        $\rho$ describing a quantum setup cannot be written as \(\rho = \ketp \brap\); \\
+        intuition: In the ensemble representation:
+        \[\{p_i, \ket{\psi_i}\} \text{ of } \rho ,\]
+        all the probabilities are strictly smaller than 1. \\
+        Then, \(\tr[\rho^2] = \sumX_i p_i^2 < 1\)
+    \end{subfigure}
+\end{figure}
+
+\noindent
+In general: Let $\rho$ be a density operator. Then \(\tr[\rho^2] \le 1\),
+ and \(\tr[\rho^2] = 1\) if and only if $\rho$ describes a pure quantum state. \\
+
+\noindent
+Proof: Denote the eigenvalues of $\rho$ by $\{\lambda_i\}$, 
+then \(0 \le \lambda_i \le 1\) since $\rho$ is positive and \(1 = \tr[\rho] = \sumX_i \lambda_i\).\\
+
+\noindent
+Moreover, \(\tr[\rho^2] = \sumX_i \lambda_i^2 \le 1, \text{ with } "=1" \) precisely if one of the eigenvalues is 1 and the other are 0. \\
+
+\noindent
+The ensemble representation is not unique! \\
+Example:
+\begin{flalign*}
+    \rho    &= \frac{3}{4} \ketz \braz + \frac{1}{4} \keto \brao &= \frac{1}{2} \ket{a} \bra{a} + \frac{1}{2} \ket{b} \bra{b} && \\
+            &\ \textcolor{gray}{= \colvec{\frac{3}{4} & 0 \\ 0 & \frac{1}{4}}} &\text{with } \ket{a} = \sqrt{\frac{3}{4}} \ketz + \sqrt{\frac{1}{4}} \keto \ \ &&\\
+            && \ket{b} = \sqrt{\frac{3}{4}} \ketz - \sqrt{\frac{1}{4}} \keto \ \ &&
+\end{flalign*}
+
+\noindent
+(But note that \ketz, \keto are the (unique) eigenvectors of $\rho$, and \(\braket{a | b} \ne 0\)) \\
+
+\noindent
+For the following: given an ensemble \(\{p_i, \ket{\psi_i}\}\), 
+set \(\ket{\widetilde{\psi}_i} = \sqrt{p_i} \ket{\psi_i}\) such that \(\rho = \sumX_i \ket{\widetilde{\psi}_i} \bra{\widetilde{\psi}_i}\). \\
+Ensemble \(\{\ket{\widetilde{\psi}}_i\}\) \underline{generates} the density operator $\rho$. \\
+
+\noindent
+To relate an \(\{\ket{\widetilde{\psi}_i}\}_{i=1 \hdots m}\) to another \(\{\ket{\widetilde{\varphi}_j}\}_{j=1 \hdots n}\) in case \(m \ne n\), we "pad" one of the ensembles with zero vectors, such that without loss of generality \(m = n\). \\
+
+\noindent
+{\color{blue} 
+    Unitary freedome in the ensemble of density marices: \\
+    The set \(\{\ket{\widetilde{\psi}_i}\}\) and \(\{\ket{\widetilde{\varphi}_j}\}\) generate the same density matrix if and only if:
+    \[\ket{\widetilde{\psi}}_i = \sumX_j u_{ij} \ket{\widetilde{\varphi}_j}\]
+    for some unitary matrix ($u_{ij}$). \\
+}
+
+\noindent
+Sketch of proof:\\
+"$\Leftarrow$" Insert definitions \\
+\textcolor{gray}{
+    \begin{align*}
+        \sumX_i \ket{\widetilde{\psi}_i} \bra{\widetilde{\psi}_i} 
+        &= \sumX_i (\sum_j u_{ij} \ket{\widetilde{\varphi}_j} \,) (\sumX_{j'} u_{ij'}^* \bra{\widetilde{\varphi}_j}) \\
+        &= \sumX_{j j'}
+    \end{align*}
+}
+
+\noindent
+"$\Rightarrow$" \\
+Use the spectral decomposition of the density matrix:
+\begin{align*}
+    \rho = &\sumX_k \lambda \ketbra[\widetilde{\chi}_k] \text{ with } \braket{\chi_k | \chi_l} = \delta_{kl} \\
+    \text{set} & \ket{\widetilde{\chi}_k} = \sqrt{\lambda_k} \ket{\chi_k} \; , \; \ket{\widetilde{\psi}_i} = \sumX_k v_{ik} \ket{\widetilde{\chi}_k} (1)
+\end{align*}
+
+\begin{center}
+    for some complex coefficients $v_{ik}$
+\end{center}
+
+\begin{align*}
+    \text{Then } \sumX_k \ketbra[\widetilde{\chi}_k] 
+    &= \textcolor{gray}{\sumX_{k, l}} \textcolor{forest}{\delta_{k, l}} \textcolor{gray}{\ketbra[\widetilde{\chi}_k]}
+     = \rho = \sumX_i \ketbra[\widetilde{\psi_i}] \\
+    &\overset{(1)}{=} \sumX_{j,l} (\textcolor{forest}{\sumX_i v_{ik} v_{il}^*}) \ket{\widetilde{\chi}_k} \bra{\widetilde{\chi}_l}
+\end{align*}
+
+\noindent
+This equation can only be satisfied (since the $\ket{\widetilde{\chi}_k}$ are orthogonal and thus 
+$\ket{\widetilde{\chi}_k} \bra{\widetilde{\chi}_l}$ linearly independent) if \\
+\textcolor{forest}{\(\forall k, l : \delta_{k l} = \sumX_i v_{ik} v_{il}^*\)} 
+\textcolor{gray}{\(= (V^T V^*)_{kl} = (V^+ V)_{kl}^* \Leftrightarrow V^+ V = I \)} (V is unitary)
+
+\noindent
+In other words, if V is a unitary matrix. \\
+By the same arguments: \(\ket{\widetilde{\varphi}_j} = \sumX_k \omega_{jk} \ket{\widetilde{\chi}_k}\) for a unitary matrix \((\omega_{jk})\) \\
+Thus: \(\ket{\widetilde{\psi}_i} = \sumX_k v_{ik} \ket{\widetilde{\chi}_k} 
+= \sumX_{k, j} v_{ik} \; \omega_{jk}^* \ket{\widetilde{\varphi}_j} = \sumX_j (V \cdot \omega^+)_{jk} \ket{\widetilde{\varphi}_j}\) and \(V \cdot \omega^+\) is (as a product of unitary matrice) again unitary. \\
+
+\noindent
+The \underline{Block Sphere} picture of a qubits can be generalized to \underline{mixed states} by the representation:
+\textcolor{blue}{
+    \[\rho = \frac{I + \vec{r} \cdot \vec{\sigma}}{2}\]
+}
+
+\noindent
+with \textcolor{blue}{\(\vec{r}\)} \(\in \mathbb{R}^3, \norm{\vec{r}} \le 1\), the \underline{Bloch sphere} of $\rho$ (see sheet 11) \\
+(coincides with hitherto definition of Bloch vector in case \(\rho = \ketbra\).) 
+
+\subsection{The reduced density operator}
+(Nielsen and Chuang section 2.4.3) \\
+
+\noindent
+\textcolor{blue}{
+    Definition (partial trace): Let \(n_1, n_2 \in \mathbb{N}.\) \\
+    The \underline{partial trace} operations are defined in terms of the conventional matrix trace (tr) by:
+    \begin{align*}
+        \tr_1 : \mathbb{C}^{n_1 n_2 \times n_1 n_2} \longmapsto \mathbb{C}^{n_2 \times n_2}, \tr_1[M_1 \otimes M_2] = \tr[M_1] \cdot M_2. \\
+        \tr_2 : \mathbb{C}^{n_1 n_2 \times n_1 n_2} \longmapsto \mathbb{C}^{n_1 \times n_1}, \tr_2[M_1 \otimes M_2] = \tr[M_2] \cdot M_1. 
+    \end{align*}
+    for all \(M_1 \in \mathbb{C}^{n_1 \times n_1}\) and \(M_2 \in \mathbb{C}^{n_2 \times n_2}\), together with linear expansion:
+}
+
+\noindent
+\textcolor{gray}{
+    \begin{align*}
+        \tr_1[\alpha \; M_1 \otimes M_2 + \beta \; N_1 \otimes N_2] &= \alpha \tr_1[M_1 \otimes M_2] + \beta \tr_1[M_1 \otimes M_2] \\
+        \tr_2 \left[\colvec{B_{11} & B_{12} \\ B_{21} & B_{22}} \right] &= \colvec{\tr[B_{11}] & \tr[B_{12}] \\ \tr[B_{21}] & \tr[B_{22}]} \in \mathbb{C}^{2 \times 2}
+    \end{align*}
+}
+
+\noindent
+\begin{figure}[H]
+    \begin{subfigure}[c]{0.5\textwidth}
+        Consider a composite quantum system consisting of subsystems A and B for example:
+        \[A : m \text{ qubits, } B : n \text{ qubits }\] \[\textcolor{gray}{\Rightarrow n_1 = 2^m \land n_2 = 2^n}\]
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[c]{0.40\textwidth}
+        \begin{quantikz}
+            \lstick[wires=2]{A} & & & & & \\
+                                & & & & & \\
+            \lstick[wires=3]{B} & & & & & \\
+                                & & & & & \\
+                                & & & & & \\
+        \end{quantikz}
+    \end{subfigure}
+\end{figure}
+
+\noindent
+Let the quantum system be described by a density operator \(\rho^{AB}\). \\
+Define the \underline{reduced density operator for system A by:}
+\[\rho^A = \tr_B[\rho^{AB}]\]
+and analgously for system B by:
+\[\rho^B = \tr_A[\rho^{AB}]\]
+
+\pagebreak \noindent
+Examples:
+\begin{itemize}
+    \item For any quantum states \(\ket{a_1}, \ket{a_2} \in A \land \ket{b_1}, \ket{b_2} \in B:\)
+            \[\tr_B[\underbrace{\ket{a_1} \bra{a_2}}_{\textcolor{gray}{M_1}} \otimes \underbrace{\ket{b_1} \bra{b_2}}_{\textcolor{gray}{M_2}}]
+            = \ket{a_1} \bra{a_2} \cdot \underbrace{\tr{\ket{b_1} \bra{b_2}}}_{\braket{b_2 | b_1}} = \ket{a_1} \bra{a_2} \cdot \underbrace{\braket{b_2 | b_1}}_{\in \mathbb{C}}\]
+    \item Given a density matrix $\rho$ for a subsystem A and $\sigma$ for subsystem B. \\
+            Suppose that the overall density matrix is: \[\rho^{AB} = \rho \otimes \sigma\]
+            \begin{align*} \text{Then: } &\tr_B[\rho^{AB}] = \rho \cdot \underbrace{\tr[\sigma]}_1 = \rho \\
+            &\tr_A[\rho^{AB}] = \sigma \cdot \underbrace{\tr[\rho]}_1 = \sigma \end{align*}
+    \item \(\rho^{AB} = \ketbra \text{ with } \ketp = \ketX[1][1]{Phi+}\) (Bell state)
+                Expanding \(\rho^{AB}\) leads to:
+                \begin{align*} \rho^{AB}    &= \frac{1}{2} (\ketzz + \brazz) (\brazz + \braoo) \\
+                                            &= \frac{1}{2} (\ketbra[\textcolor{forest}{0}0] + \ket{\textcolor{forest}{0}0} \bra{\textcolor{forest}{1}1}
+                                            + \ket{\textcolor{forest}{1}1} \bra{\textcolor{forest}{0}0} + \ketbra[\textcolor{forest}{1}1]) \\ \\
+                                \rho^A      &= \tr[\rho^{AB}] \\ &= \frac{1}{2} (\textcolor{forest}{\ketbra[0]} \cdot \BraKet[0]{} + \textcolor{forest}{\ketz + \brao} \cdot \braket{1 | 0} 
+                                            + \textcolor{forest}{\keto \braz} \cdot \braket{0 | 1} + \textcolor{forest}{\ketbra[1]} \cdot \BraKet[1]{}) \\
+                                            &= \frac{1}{2} (\ketbra[0] +  \ketbra[1]) = \dfrac{\mathbb{I}}{2} \hspace*{10pt} | \mathbb{I} \equiv \mathds{1} \equiv \text{I}
+                \end{align*}
+\end{itemize}
+
+\vspace*{2pt} \noindent
+Note: composite system is the "pure state" \ketp, whereas the subsystem is described by the "mixed state" $\dfrac{\mathbb{I}}{2}$.
+\[(\text{Indeed a mixed state: } \tr\!\left[\left(\dfrac{\mathbb{I}}{2}\right)^2\right] = \frac{1}{4} \tr[\mathbb{I}] = \frac{1}{2} < 1.)\]
+Motivation / justification for partial trace: \\
+Let M be any observable or subsystem A, then we want that $\rho^A$ yields the same statistics for measuring M as \(\rho^{AB}\) for measuring \(M \otimes \mathbb{I}\). \\
+In particular:
+\[\braket{M}_A = \tr[M \cdot \rho^A] \overset{!}{=} \tr_{AB}[(M \otimes \mathbb{I}) \cdot \rho^{AB}] = \braket{M \otimes \mathbb{I}}_{AB}\]
+for all observables M and all density operators \(\rho^{AB}.\) \\
+The partial trace operator for computing \(\rho^A\) from \(\rho^{AB}\) is the unique operation with this property (Nielsen and Chuang Box 2.6).
