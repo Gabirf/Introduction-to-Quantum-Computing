@@ -278,3 +278,60 @@ In particular:
 \[\braket{M}_A = \tr[M \cdot \rho^A] \overset{!}{=} \tr_{AB}[(M \otimes \mathbb{I}) \cdot \rho^{AB}] = \braket{M \otimes \mathbb{I}}_{AB}\]
 for all observables M and all density operators \(\rho^{AB}.\) \\
 The partial trace operator for computing \(\rho^A\) from \(\rho^{AB}\) is the unique operation with this property (Nielsen and Chuang Box 2.6).
+\pagebreak
+
+\noindent
+Application to quantum teleportation: Why does quantum teleportation not allow for faster than light communication via the instantanious wavefunction-collapse? \\
+Recall the corresponding quantum circuit: \\
+
+\begin{quantikz}
+    \lstick{\ketp}                        && \ctrl{1}  \slice{$\ket{\psi_1}$} & \gate{H} \slice{$\ket{\psi_2}$} & \meter{} \slice{$\ket{\psi_2}$} & \setwiretype{c} & \wire[d][2]{c} \\
+    \lstick[wires=2]{$\ket{\beta_{00}}$}  && \targ{}   \qw                    & \qw                             & \meter{}                        & \setwiretype{c} \wire[d][1]{c} \\
+                                          && \qw       \qw                    & \qw                             & \qw                             & \gate{X}        & \gate{Z}       & \rstick{\ketp}
+\end{quantikz} \\
+
+\noindent
+At $\ket{\psi_3}$, Alice has completed her measurements(her qubits have "collapsed"), but Bob does not know the measurement results yet. \\
+Intermediate state $\ket{\psi_2}$: (see previous lecture)
+\begin{align*}
+    \ket{\psi_2} = \frac{1}{2} (\ketzz (\super) &+ \ketzo (\alpha \keto + \beta \ketz) \\ + \ketzo (\super[-]) &+ \ketoo (\alpha \keto - \beta \ketz))
+\end{align*}
+
+\noindent
+Thus, directly after Alice's measurement, the system is in the state (from Bob's perspective, who does not know the measurement results yet);
+
+\begin{align*}
+    \ket{\varphi_1} &= \ketzz (\super);                     \text{  with probability } \frac{1}{4}  \\
+    \ket{\varphi_2} &= \ketzo (\alpha \keto + \beta \ketz); \hspace{4em} "                          \\
+    \ket{\varphi_3} &= \ketzo (\super[-]);                  \hspace{4em} "                          \\
+    \ket{\varphi_4} &= \ketoo (\alpha \keto - \beta \ketz); \hspace{4em} "
+\end{align*}
+
+\noindent
+Corresponding density matrix of ensemble \({\frac{1}{4}, \ket{\varphi_j}}_{j=1 \hdots 4}\):
+\begin{align*}
+    \rho^{AB}   &= \frac{1}{4} \sumX_{j=1}^{4} \ketbra[\varphi_j] \\
+                &= \frac{1}{4} (\ketbra[00] \otimes (\super)                        (\alpha^* \braz + \beta^* \brao) \\
+                &+ \ \ \ \      \ketbra[01] \otimes (\alpha \keto + \beta \ketz)    (\alpha^* \brao + \beta^* \braz) \\
+                &+ \ \ \ \      \ketbra[10] \otimes (\super[-])                     (\alpha^* \braz - \beta^* \brao) \\
+                &+ \ \ \ \      \ketbra[11] \otimes (\alpha \keto - \beta \ketz)    (\alpha^* \brao - \beta^* \braz))\\
+                &\text{ Alice's qubits } |           \ \ \ \ \ \ \ \ \ \        \text{ Bob's qubits}
+\end{align*}
+
+\noindent
+Reduced density operator describing Bob's qubit:
+\begin{align*}
+    \textcolor{gray}{(1): } &\textcolor{gray}{\tr[\ketbra[a_1 a_2]] = \BraKet[a_1 a_2]{} = 1 \ \ \forall a_1, a_2 \in {0,1}} \\ \\
+    \rho^B  = \tr_A[\rho^{AB}] &\overset{(1)}{=} \frac{1}{4} ((\super) (\alpha^* \braz + \beta^* \brao)           \\
+                               &+ \ \ \ \ \;(\alpha \keto + \beta \ketz) (\alpha^* \brao + \beta^* \braz)         \\
+                               &+ \ \ \ \ \;(\super[-])                  (\alpha^* \braz - \beta^* \brao)         \\
+                               &+ \ \ \ \ \;(\alpha \keto - \beta \ketz) (\alpha^* \brao - \beta^* \braz))        \\ \\
+                               &= \frac{1}{4} \left( 2 \underbrace{(\abs{\alpha}^2 + \abs{\beta}^2)}_{= 1} \ketbra[0] + 2 (\abs{\alpha}^2 + \abs{\beta}^2) \ketbra[1] \right) \\
+                               &= \frac{1}{2} (\ketbra[0] + \ketbra[1]) = \frac{\mathbb{I}}{2}                    \\
+                               &\leadsto \text{independent of \ketp ($\alpha$ and $\beta$ coefficients)}
+\end{align*}
+
+\noindent
+Since \(\rho^B = \frac{\mathbb{I}}{2}\), any measurements by Bob cannot reveal any information about \ketp, 
+i.e. Alice cannot transmit information (encoded in $\alpha$, $\beta$) via the instantanious wavefunction collapse to Bob.
+

@@ -46,7 +46,7 @@ Quantum circuit for teleporting \ketp:
 \begin{quantikz}
     \lstick{\textcolor{red}{\ketp}}       && \ctrl{1}  \slice{$\ket{\psi_1}$} & \gate{H} \slice{$\ket{\psi_2}$} & \meter{} & \setwiretype{c} & \wire[d][2]{c} \\
     \lstick[wires=2]{$\ket{\beta_{00}}$}  && \targ{}   \qw                    & \qw                             & \meter{} & \setwiretype{c} \wire[d][1]{c} \\
-                                          && \qw       \qw                    & \qw                             & \qw      & \gate{x}        & \gate{z}       & \rstick{\textcolor{red}{\ketp}}
+                                          && \qw       \qw                    & \qw                             & \qw      & \gate{X}        & \gate{Z}       & \rstick{\textcolor{red}{\ketp}}
 \end{quantikz} \\
 \textcolor{gray}{(wire 1 \& 2 represent Alice's 2 qubits, wire 3 represents Bob's Qubit.)} \\
 
