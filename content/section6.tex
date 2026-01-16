@@ -1,0 +1,106 @@
+\section{Quantum operations}
+(Nielsen and Chuang section 8.2)
+
+\subsection{Motivation and overview}
+
+In general: changes of quantum states affected by unitary time evolution or wavefunction collapse during measurement.
+Quantum operations (also called \underline{"quantum channels"}) are a (mathematical) generalization 
+and unification of these concepts. \\
+
+\noindent
+Abstractly: \\
+\begin{center}
+    \(\rho' = \mathcal{E}(\rho)\) \\ with \(\mathcal{E} \coloneqq\) quantum operation and \(\rho \coloneqq\) density matrix
+\end{center}
+
+\noindent
+Special cases:
+\begin{itemize}
+    \item unitary time evolution: \(\quop = U \cdot \rho \cdot U^\dagger\)
+    \item measurements, with measurement operations ${M_m}$:
+            \begin{align*}
+                &\text{recall that } p(m) = \tr[M_m^\dagger M_m \rho] \ \ | \; p(m) \coloneqq \text{"probability of outcome m"} \\
+                &\text{State after obtaining result m:} \\
+                & \ \ \ \ \ \textcolor{blue}{\rho_m} = \frac{M_m \rho M_m^\dagger}{\tr[M_m^\dagger M_m \rho]} = \frac{M_m \rho M_m^\dagger}{p(m)} \\
+                &\text{Corresponding quantum channel (without normalisation):} \\
+                & \ \ \ \ \ \; \quop = M_m \rho M_m^\dagger \\
+                & \ \ \ \ \ p(m) = \tr[\quop] \text{ is the probability that outcome m occurs.}
+            \end{align*}
+\end{itemize}
+
+\noindent
+Consider the scenario of performing a measurement, but not recording the outcome: \\
+\indent $\leadsto$ density matrix after this process is the weighted sum over all possible outcomes:
+
+\[\quop = \sumX_m p(m) \cdot \textcolor{blue}{\rho_m} = \sumX_m M_m \rho M_m^\dagger \coloneqq "\text{operator-sum (Kraus) representation of } \mathcal{E}"\]
+
+\noindent
+Different (but equivalent) perspectives on quantum operations:
+\begin{itemize}[label=-]
+    \item system coupled to environment (Stinespring dilation)
+    \item operator-sum (Kraus) representation
+    \item physically motivated axioms
+    \item Choi matrix representation
+\end{itemize}
+
+
+\subsection{Environments and quantum operations}
+
+"Open" quantum systems can be regarded as interactions between a:
+\begin{itemize}
+    \item principal quantum system (initially in state $\rho$)
+    \item environment (initially in state $\rho_{env}$)
+\end{itemize}
+
+\noindent
+The principal system interacts with the environment, i.e. a time evolution of the overall system 
+described by some unitary U:
+
+\begin{figure}[H]
+    \begin{subfigure}{0.5\textwidth}
+        \hspace{2em} Circuit diagram: 
+        \vspace*{10pt}
+
+        \begin{quantikz}
+            \lstick{$\rho$} && \gate[wires=2]{U} && \\
+            \lstick{$\rho_{env}$} &&             && \\
+        \end{quantikz}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \ \ mathematical representation:
+        \[U \cdot (\rho \otimes \rho_{env}) \cdot U^\dagger\]
+    \end{subfigure}
+\end{figure}
+
+\noindent
+Example:
+\begin{figure}[H]
+    \begin{quantikz}
+        \lstick{$\rho$}         && \ctrl{1} \gategroup[2,steps=1,style={inner sep=6pt}]{$U_{\text{c-{\sc not}}}$} && \rstick{$\quop$} \\
+        \lstick{$\ketbra[0]$}   && \targ{}  && 
+    \end{quantikz}
+\end{figure}
+
+\noindent
+Represents \(\rho   = \colvec{\rho_{00} & \rho_{01} \\ \rho_{10} & \rho_{11}} 
+                    = \rho_{00} \ketbra[0] + \rho_{01} \ket{0} \bra{1} + \rho_{10} \ket{1} \bra{0} \rho_{11} \ketbra[1]\),
+then:
+ 
+\begin{flalign*}
+    &\ \ \ \ U_{\text{c-{\sc not}}} \cdot (\rho \otimes \textcolor{forest}{\ketbra[0]}) U_{\text{c-{\sc not}}}^\dagger \\
+    &= U_{\text{c-{\sc not}}} \cdot (\rho_{00} \ketbra[0\textcolor{forest}{0}] + \rho_{01} \ket{0\textcolor{forest}{0}} \bra{1\textcolor{forest}{0}} 
+                                    + \rho_{10} \ket{1\textcolor{forest}{0}} \bra{0\textcolor{forest}{0}} \rho_{11} \ketbra[1\textcolor{forest}{0}]) U_{\text{c-{\sc not}}}^\dagger \\
+    &= \hspace{3em} \hspace{8pt} \rho_{00} \ketbra[00] + \rho_{01} \ket{00} \bra{1\textcolor{red}{1}} + \rho_{10} \ket{1\textcolor{red}{1}} \bra{00} \rho_{11} \ketbra[1\textcolor{red}{1}]
+\end{flalign*}
+
+\begin{flalign*}
+    \tr_{env}[\hdots]   &= \hspace{17pt} \rho_{00} \ketbra[0] \BraKet[0]{} + \rho_{01} \ket{0} \bra{1} \braket{1 | 0} + \rho_{10} \ket{1} \bra{0} \braket{0 | 1} \rho_{11} \ketbra[1] \BraKet[1]{} \\
+                        &= \hspace{17pt}\rho_{00} \ketbra[0] + \rho_{11} \ketbra[1] \\
+                        &= \hspace{15pt} \colvec{\rho_{00} & 0 \\ 0 & \rho_{11}} \\
+                        &= \hspace{17pt} P_0 \rho P_0 + P_1 \rho P_1 \text{ with } P_0 = \ketbra[0], \; P_1 = \ketbra[1]
+\end{flalign*}
+\begin{center}
+    (off-diagonal entries of $\rho$ are set to zero)
+\end{center}
+
