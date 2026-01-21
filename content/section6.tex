@@ -104,3 +104,114 @@ then:
     (off-diagonal entries of $\rho$ are set to zero)
 \end{center}
 
+
+\subsection{Operator-sum (Kraus) representation}
+
+Let \({\ket{e_k}}\) be an orthonormal basis of the environment quantum system, assume w.l.o.g. \(\rho_{env} = \ketbra[e_0]\)
+(see tutorial 12: if environment is a mixed state, then can equivalently work with a pure state in a larger environment) \\
+\begin{align*}
+    &\textcolor{gray}{(1): \sumX_k \ketbra[e_k] = I \text{ on environment}} \\
+    &\textcolor{gray}{(2): \tr[A \ketbra[j]] = \BraKet[j]{A}}
+\end{align*}
+\begin{align*}
+    \leadsto \quop  &= \tr_{env}[U(\rho \otimes \ketbra[e_0]) U^\dagger] \\
+                    &\overset{(1)}{=} \sumX_k \tr_{env}[U (\rho \otimes \ketbra[e_0]) U^\dagger \cdot (I \otimes \ketbra[e_k])] \\
+                    &\overset{(2)}{=} \sumX_k \BraKet[e_k]{U (\rho \otimes \textcolor{forest}{\ketbra[e_0]}) U^\dagger} \\
+                    &= \sumX_k \textcolor{blue}{E_k} \rho \textcolor{blue}{E_k^\dagger}
+\end{align*}
+
+\noindent
+with $\textcolor{blue}{E_k}$ a complex matrix with entries \((\textcolor{blue}{E_k})_{lm} = \braket{l, e_k | U | m, \textcolor{forest}{e_0}}\)
+
+\noindent
+The $E_k$'s are called \underline{operation elements} or \underline{Kraus operators} of $\mathcal{E}$:
+
+\begin{figure}[H]
+    \begin{subfigure}{0.5\textwidth}
+        \[\quop = \sumX_k \textcolor{blue}{E_k} \rho \textcolor{forest}{E_k^\dagger}\]
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \begin{quantikz}
+                                                    &  \gate[2]{\textcolor{blue}{U}}    & \measure{\rho}                         & \gate[2]{\textcolor{forest}{U^\dagger}}  & \\
+            \lstick{$\textcolor{blue}{\bra{e_k}}$}  &  \qw                              & \push{\textcolor{blue}{\ket{e_0}} \textcolor{forest}{\bra{e_0}}} &                                          & \rstick{\textcolor{forest}{$\bra{e_k}$}}
+        \end{quantikz}
+    \end{subfigure}
+\end{figure}
+
+\noindent
+Revisit example:
+\begin{figure}[H]
+    \begin{quantikz}
+        \lstick{$\rho$}         && \ctrl{1} \gategroup[2,steps=1,style={inner sep=6pt}]{$U_{\text{c-{\sc not}}}$} && \rstick{$\quop$} \\
+        \lstick{$\ketbra[0]$}   && \targ{}  && 
+    \end{quantikz}
+\end{figure}
+
+\noindent
+\((E_0)_{lm} = \braket{l, 0 | U_{CNOT} | m, 0}\) \hspace{3em} \(\leadsto E_0 = \colvec{1 & 0 \\ 0 & 0} = P_0\) \\
+\((E_1)_{lm} = \braket{l, 1 | U_{CNOT} | m, 0}\) \hspace{3em} \(\leadsto E_1 = \colvec{0 & 0 \\ 0 & 1} = P_1\) \\
+\textcolor{gray}{Look at official lecture for extra notes} $P_0$ and $P_1$ agree with previous derivation. \\
+
+\newpage \noindent
+If $\mathcal{E}$ is trace-preserving, then for any density matrix of $\rho$: \\
+\[1 \overset{!}{=} \tr[\quop] = \tr[\sumX_k E_k \rho E_k^\dagger] = \sumX_k \tr[E_k \rho E_k^\dagger] \overset{*}{=} \sumX_k \tr[E_k^\dagger E_k \rho] = \tr[(\sum_k E_k^\dagger E_k) \rho]\]
+\textcolor{gray}{*: cyclic invariance} \\
+should hold for arbitrary $\rho$ with $\tr[\rho] = 1 \leadsto \textcolor{blue}{\sumX_k E_k^\dagger E_k = I}$ \\
+
+\noindent
+We allow for quantum channels with $\sumX_k E_k^\dagger E_k \textcolor{blue}{\le} I$ \\
+\("A \le B"\) if B-A is positive semidefinite (p.s.d.) 
+\begin{itemize}[label=]
+    \item \(A \in \mathbb{C}^{n \times n} \) is called \underline{positive semidefinite} if A is Hermitian and \(\BraKet[V]{A} \ge 0\) for all \(v \in \mathbb{C}^n \Leftrightarrow\) all eigenvalue of A are $\ge$ 0
+\end{itemize}
+
+\noindent
+\(\sumX_k E_k^\dagger E_k \overset{!}{\le} I\) stems from requiremet that $\tr[\quop] \overset{!}{\le} 1$
+
+\noindent
+Remark: \underline{Physical interpretation} of a quantum channel as measurement performed on environment with respect to ${e_k}$ basis, i.e. the measurement operators $\ketbra[e_k]$: \\
+
+\noindent
+For outcome k, state of principal system is: 
+\[\rho_k \propto \tr_{env}[ \; \ketbra[e_k] U (\rho \otimes \ketbra[e_0]) U^\dagger \ketbra[e_k] \; ] = E_k \rho E_k^\dagger\],
+i.e. $E_k$'s play the role of the measurement operators on the principal system.
+
+\noindent
+\underline{System-environment model of Krans representation} \\
+Given trace-preserving \(\quop = \sumX_{k = 0}^{n-1} E_k \rho E_k^\dagger\), is there a corresponding system-environment representation? \\
+Yes: Define model environment as vector space of dimension \textcolor{orange}{n} with orthonormal basis \({\ket{e_k}}_{k=0, \hdots, n-1}\), assume that environment starts in $\ket{e_0}$ state. \\
+
+\noindent
+Define unitary U via \(U \cdot \ketp \ket{e_0} \overset{\textcolor{red}{(*)}}{=} \sumX_k E_k \ketp \ket{e_k}\) and use \textcolor{blue}{matrix extension} 
+to a unitary operator on the combined system. \\
+
+\noindent
+This is possible since for any principal quantum states \ketp, 
+\begin{align*}
+    \bra{\psi} \bra{e_0} U^\dagger U \ket{\varphi} \ket{e_0} &\overset{\textcolor{red}{(*)}}{=} \sumX_{k, k'} \braket{\psi | E_k^\dagger E_{k'} | \varphi} \braket{e_k | e_{k'}} \\
+    &= \braket{\psi | \sumX_k E_k E_k^\dagger | \varphi} = \braket{\psi | \varphi} = I 
+\end{align*} (completeness relation)
+
+\noindent
+U has the desired property since:
+\begin{align*} 
+    \tr_{env}[U (\rho \otimes \ketbra[e_0]) U^\dagger ] &\overset{\textcolor{red}{(*)}}{=} \sumX_{k, k'} \tr_{env}[ \; (E_k \rho E_{k'}) \otimes \ket{e_k} \bra{e_{k'}} \;] \\
+    &= \sumX_{k, k'} E_k \rho E_{k'}^\dagger \underbrace{\braket{e_{k'} | e_{k}}}_{\delta_{kk'}} \\
+    &= \sumX_k E_k \rho E_k^\dagger
+\end{align*}
+
+\subsection{6.4 Axiomatic approach to quantum operations}
+Alternative viewpoint: physically motivated axioms which a quantum operation $\mathcal{E}$ has to obey:
+
+\begin{itemize}[label=]
+    \item A1: \(\tr[\quop]\) is the probability that the process $\mathcal{E}$ occurs, thus \(0 \le \tr[\quop] \le 1\) for all density matrices $\rho$.
+    \item A2: \(\mathcal{E}\) is convex-linear: \\ \[\mathcal{E}(\sumX_i p_i \rho_i) = \sumX_i p_i \mathcal{E}(\rho_i) \text{ for any probability vector p and density matrices } \rho \]
+    \item A3: \(\mathcal{E}\) is a \underline{completely positive} map: \\
+                \begin{quote}
+                $\mathcal{E}(A)$ must be positive semidefinite (p.s.d.) for any p.s.d. matrix A \\
+                Moreover, when enlarging the principal system Q by another quantum system R, then \((I \otimes \mathcal{E})(A)\) must be p.s.d. for any p.s.d. A on the conbined system RQ.
+                \textcolor{gray}{I on R and $\mathcal{E}$ on Q}
+                \end{quote}
+
+\end{itemize}
