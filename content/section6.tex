@@ -215,3 +215,119 @@ Alternative viewpoint: physically motivated axioms which a quantum operation $\m
                 \end{quote}
 
 \end{itemize}
+
+\subsection{Currently in Work}
+\subsection{Currently in Work}
+
+\subsection{Examples of quantum channels}
+(Nielsen and Chuang section 8.3) \\
+
+\noindent
+Bit flip channel: flip \(\ketz \leftrightarrow \keto\) with probability \(1 - p, p \in [0,1]\)
+\begin{flalign*}
+    &E_0 = \sqrt{p} \cdot I, E_1 = \sqrt{1 - p} \cdot X \\
+    &\mathcal{E}_{BF}(\rho) = \sumX_{k = 0}^1 E_k \rho E_k^\dagger = p \cdot \rho + (1 - p) X \rho X
+\end{flalign*}
+
+\noindent
+Recall Block vector $\vec{r}$ of density matrix: \(\rho = \frac{I + \vec{r} \cdot \vec{\sigma}}{2}\)
+\[\tr[\rho^2] = \frac{1}{2} (1 + \norm{\vec{r}}^2), \text{ see Exercise 11.2}\]
+\begin{align*}
+    &X \cdot X \cdot X = X \\
+    &Y \cdot Y \cdot Y \; = \textcolor{orange}{-}Y \\
+    &Z \cdot Z \cdot Z \; \, = \textcolor{orange}{-}Z
+\end{align*}
+\[\mathcal{E}_{BF}(\rho) = \frac{I + \vec{r'} \cdot \vec{\sigma}}{2} \text{ with } 
+\vec{r'} = \colvec{p \ r_1 + (1 - p)r_1 \\ p \  r_2 + (1 - p)r_2 \\ p \ r_3 + (1 - p)r_3} 
+= \colvec{r_1 \\ (2p - 1) r_2 \\ (2p - 1) r_3}\]
+
+\noindent
+\begin{itemize}
+    \item Phase flip (analgously) \\
+            \[E_0 = \sqrt{p} I, E_1 = \sqrt{1 - p} Z\]
+            \begin{flalign*}
+                \mathcal{E}_{PF}(\rho) &= \sumX_{k = 0}^1 E_k \rho E_k^\dagger \\
+                &= p \cdot \rho + (1 - p) Z \rho Z
+            \end{flalign*}
+            \[\vec{r'} = \colvec{(2p - 1) r_1 \\ (2p - 1) r_2 \\ r_3}\]
+            For \(p = \frac{1}{2}\) : by unitary freedom of Kraus representation: \\
+            \begin{flalign*}
+                P_0 \coloneqq \textcolor{blue}{\frac{1}{\sqrt{2}}} E_0 + \textcolor{blue}{\frac{1}{\sqrt{2}}} E_1 = \frac{1}{2} I + \frac{1}{2} Z = \colvec{ 1 & 0 \\ 0 & 0} = \ketbra[0] \\
+                P_1 \coloneqq \textcolor{blue}{\frac{1}{\sqrt{2}}} E_0 - \textcolor{blue}{\frac{1}{\sqrt{2}}} E_1 = \frac{1}{2} I - \frac{1}{2} Z = \colvec{ 0 & 0 \\ 0 & 1} = \ketbra[1]
+            \end{flalign*}
+            \[\leadsto \mathcal{E}_{PF, \frac{1}{2}}(\rho) = P_0 \rho P_0 + P_1 \rho P_1\]
+            \begin{center} (equivalent to standard basis measurement) \end{center}
+    
+    \item Deplolarizing channel: \\
+        \begin{quote}
+            Replace $\rho$ by the completely mixed state $\frac{I}{2}$ with probability p:
+            \[\mathcal{E}_{DP}(\rho) = p \cdot \textcolor{forest}{\frac{I}{2}} + (1 - p) \rho\]
+            Block sphere representation: uniform contraction: (images in official script) \\
+            Circuit representation of deplolarizing channel: \\
+            (Make circuit here) \\
+
+            \noindent
+            Kraus form of deplolarizing channel: \\
+            trick: for a normalized density matrix $\rho$ \(\tr[\rho] = 1\)
+            \[\textcolor{forest}{\frac{I}{2}} = \frac{\rho + X \rho X + Y \rho Y + Z \rho Z}{4}\]
+            \[\leadsto \mathcal{E}_{DP}(\rho) = (1 - p + p \frac{1}{4})\rho + \frac{\rho}{4} (X \rho X + Y \rho Y + Z \rho Z)\]
+            \[\leadsto E_0 = \sqrt{1 - \frac{3}{4}p} I, E_1 = \frac{\sqrt{P}}{2} X, E_2 = \frac{\sqrt{P}}{2} Y, E_3 = \frac{\sqrt{P}}{2} Z\]
+        \end{quote}
+    
+    \item Amplitude damping (see Nielsen and Chuang section 8.3.5, Exercice 13.1) \\
+        e.g. photon in cavity
+        \begin{quote}
+            \ketz: no photon \\
+            \keto: single photon
+        \end{quote}
+
+        \[E_0 = \colvec{1 & 0 \\ 0 & \sqrt{1 - \gamma}}, E_1 = \colvec{0 & \sqrt{\gamma} \\ 0 & 0}\]
+        \[E_1 \keto = \sqrt{\gamma} \ketz \ \ \ \ \text{Interpretation}: \keto \rightarrow \ketz \text{ with probability } \gamma \]
+
+        Circuit representation:\\
+        \begin{figure}[H]
+            \begin{subfigure}{0.6\linewidth}
+                \hspace{3em}
+                \begin{quantikz}
+                    \lstick{$\rho$} & \ctrl{1}              &   \targ{}     &   \rstick{$\mathcal{E}_{AD}(\rho)$}\\
+                    \lstick{\ketz}  & \gate{R_y(\theta)}    &   \ctrl{-1}   &
+                \end{quantikz}
+            \end{subfigure}
+            \hfil
+            \begin{subfigure}{0.35\linewidth}
+                with \(\gamma = \sinhalf{\theta}^2\)
+            \end{subfigure}
+        \end{figure}
+
+    \item Phase damping (Nielsen and Chuang section 8.3.6)\\
+            \begin{quote}
+                "phase information" is lost \\
+                model: apply a "phase kick" \(R_Z(\theta) = e^{- \frac{\theta}{2} Z} = \colvec{e^{-i \frac{\theta}{2}} & 0 \\ 0 & e^{i \frac{\theta}{2}}}\)
+                with random angle $\theta \sim \frac{1}{\sqrt{4 \pi \gamma}} e^{- \frac{\theta^2}{4 \gamma}}$ (Gaussian distribution) \\ \\
+
+                \noindent
+                initial state \(\ketp = a \ketz + b \keto\) \\
+                density matrix after random phase kick: 
+                \begin{flalign*} 
+                    \rho    &= \frac{1}{\sqrt{4 \pi \gamma}} \int_{-\infty}^{+\infty} R_Z(\theta) \ketbra R_Z(\theta)^\dagger e^{\frac{\theta^2}{4\gamma}} d\theta \\
+                            &= \colvec{\abs{a}^2 & ab^* \textcolor{orange}{e^{-\gamma}} \\ a^* b \ \textcolor{orange}{e^{-\gamma}}  & \abs{b}^2}
+                \end{flalign*}
+                off-diagonal entities are damped by $\textcolor{orange}{e^{-\gamma}}$
+
+                \vspace{1em}\noindent
+                Kraus form: \(E_0 = \colvec{1 & 0 \\ 0 & \sqrt{1 - \lambda}}, \ E_1 = \colvec{0 & 0 \\ 0 & \sqrt{\lambda}}\)
+
+                \noindent
+                unitary freedome $\leadsto$ can show that channel is equivalent to phase channel is equivalent to phase flip channel:
+                \[\tilde{E}_0 = \sqrt{\alpha} \colvec{1 & 0 \\ 0 & 1}, \tilde{E}_1 \sqrt{1 - \alpha} Z \text{ with } \alpha = \frac{1 + \sqrt{1 - \lambda}}{2}\]
+
+                \noindent
+                Application to Schrödinger's cat:
+                \[\ketp = \frac{1}{\sqrt{2}} (\ket{dead} \ket{0} + \ket{alive} \ket{1})\]
+                \[\rho = \ketbra = \frac{1}{2} \colvec{\ket{dead} \ket{0} \bra{dead} \bra{0} + \textcolor{orange}{\ket{dead} \ketz \bra{alive} \brao} \\ \textcolor{orange}{\ket{alive} \keto \bra{dead} \braz} + \ket{alive} \keto \bra{alive} \brao}\]
+                \begin{center} \textcolor{orange}{off-diagonal entries $\rightarrow$ 0 due to decoherence} \end{center}
+
+                \noindent
+                $\rightarrow$ classical ensemble \[\frac{1}{2} (\ket{dead} \ketz \bra{dead} \braz + \ket{alive} \keto \bra{alive} \brao)\]
+            \end{quote}
+\end{itemize}
