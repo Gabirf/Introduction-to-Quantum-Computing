@@ -134,7 +134,7 @@ The $E_k$'s are called \underline{operation elements} or \underline{Kraus operat
     \begin{subfigure}{0.45\textwidth}
         \begin{quantikz}
                                                     &  \gate[2]{\textcolor{blue}{U}}    & \measure{\rho}                         & \gate[2]{\textcolor{forest}{U^\dagger}}  & \\
-            \lstick{$\textcolor{blue}{\bra{e_k}}$}  &  \qw                              & \push{\textcolor{blue}{\ket{e_0}} \textcolor{forest}{\bra{e_0}}} &                                          & \rstick{\textcolor{forest}{$\bra{e_k}$}}
+            \lstick{$\textcolor{blue}{\bra{e_k}}$}  &  \qw                              & \push{\textcolor{blue}{\ket{e_0}} \textcolor{forest}{\bra{e_0}}} & & \rstick{\textcolor{forest}{$\ket{e_k}$}}
         \end{quantikz}
     \end{subfigure}
 \end{figure}
@@ -213,8 +213,26 @@ Alternative viewpoint: physically motivated axioms which a quantum operation $\m
                 Moreover, when enlarging the principal system Q by another quantum system R, then \((I \otimes \mathcal{E})(A)\) must be p.s.d. for any p.s.d. A on the conbined system RQ.
                 \textcolor{gray}{I on R and $\mathcal{E}$ on Q}
                 \end{quote}
-
 \end{itemize}
+
+\noindent
+\textcolor{blue}{
+    Theroem: The map $\mathcal{E}$ satisfies A1, A2, A3 if and only if 
+    \[\quop = \sumX_k E_k \rho E_k^\dagger \]
+    for some some set of complex matrices ${E_k}$ with \(\sumX_k E_k^\dagger E_k \le I\)
+}
+
+\noindent
+Sketch of proof: \\
+$"\Leftarrow"$ to verify A3: Let A be a p.s.d. matrix on enlarged system RQ, then, for any vector \ketp on RQ:
+
+\begin{align*}
+    \BraKet{(I \otimes \mathcal{E})(A)} &= \sumX_k \BraKet{(I \otimes E_k) A (I \otimes E_k^\dagger)} \\
+                                        &= \sumX_k \BraKet[\psi_k]{A} \ge 0
+\end{align*}
+
+\noindent
+$"\Rightarrow"$ Principal syste (which $\mathcal{E}$ acts on) denoted Q, dimension n. Introduce another quantum system, labelled R, with some dimension as Q.
 
 \subsection{Currently in Work}
 \subsection{Currently in Work}
