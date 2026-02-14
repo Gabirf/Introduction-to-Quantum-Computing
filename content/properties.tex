@@ -65,6 +65,7 @@
         \item \(\sigma_j^2 = I\)
         \item \(\sigma_j \sigma_k = -\sigma_k \sigma_j \; \; \forall j, k \in [3] \mid j \ne k\)
         \item \([\sigma_j, \sigma_k] = \sigma_j \sigma_k - \sigma_k \sigma_j = 2i \sigma_l \; \; \forall (j, k, l) \in \mathrm{Cyc}(1, 2, 3)\)
+        \item \(\sigma_j \sigma_k = i \sigma_l \; \; \forall (j, k, l) \in \mathrm{Cyc}(1, 2, 3)\)
     \end{itemize}
 
     \item \href{https://en.wikipedia.org/wiki/Diagonal_matrices}{\textbf{\underline{Diagonal matrices:}}} \\
@@ -80,7 +81,7 @@
         \item \(\rho \; idempotent : \rho^2 = \ketp \BraKet{} \brap = \ketbra = \rho \; | \text{ if \textbf{pure} state}.\)
         \item \(\tr[\rho] = \sumX_i p_i = \sumX_i \lambda_i = 1\)
         \item May be rewritten as such: \(\rho = \frac{I + (\vec{r} \cdot \vec{\sigma})}{2}\)
-        \item $\rho$ is positive semi-definite so all eigenvalues are positive.
+        \item $\rho$ is positive semi-definite so all eigenvalues are positive: \(\BraKet{P} \ge 0\)
         \item The 2 eigenvalues of $\rho$ can be calulcated as such: \(\frac{1 \pm \norm{\vec{r}}}{2}\)
     \end{itemize}
 \end{itemize}
