@@ -8,5 +8,6 @@ Thank you to:
   - Maxie Helen Bichmann
   - Stefan Dopfer
   - Julian Hanuschek
+  - Senad Lemes Galera
 
 For helping with finding mistakes in the skript.
