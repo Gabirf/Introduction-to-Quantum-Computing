@@ -9,5 +9,6 @@ Thank you to:
   - Stefan Dopfer
   - Julian Hanuschek
   - Senad Lemes Galera
+  - Lucas Lange
 
 For helping with finding mistakes in the skript.
