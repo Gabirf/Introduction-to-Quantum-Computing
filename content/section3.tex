@@ -51,18 +51,18 @@ Quantum circuit for teleporting \ketp:
 \textcolor{gray}{(wire 1 \& 2 represent Alice's 2 qubits, wire 3 represents Bob's Qubit.)} \\
 
 \noindent
-Input: \begin{align*} \ketp \ket{\beta_{00}} = \ketp \otimes \ket{\beta_{00}} &= (\super) \otimes (\ketzz + \ketoo) \\ &= \frac{1}{\sqrt{2}} (\alpha \keto(\ketzz + \ketoo) + \beta\keto (\ketzz + \ketoo))\end{align*}
+Input: \begin{align*} \ketp \ket{\beta_{00}} = \ketp \otimes \ket{\beta_{00}} &= (\super) \otimes (\ketzz + \ketoo) \\ &= \frac{1}{\sqrt{2}} (\alpha \ketz(\ketzz + \ketoo) + \beta\keto (\ketzz + \ketoo))\end{align*}
 
 \noindent
 after CNOT: \\
-\(\frac{1}{\sqrt{2}} (\alpha \keto(\ketzz + \ketoo) + \beta\keto (\ket{\textcolor{red}{1}0} + \ket{\textcolor{red}{0}1}))\) \\
+\(\frac{1}{\sqrt{2}} (\alpha \ketz(\ketzz + \ketoo) + \beta\keto (\ket{\textcolor{red}{1}0} + \ket{\textcolor{red}{0}1}))\) \\
 
 \noindent
 after Hadamard:
 \begin{align*}
     \ket{\psi_2} 
     &= \frac{1}{\sqrt{2}} (\alpha (\ketX{+})(\ketzz + \ketoo) + \beta(\ketX{-}) (\ketoz + \ketzo)) \\
-    &= \frac{1}{2} (\alpha \ket{000} + \alpha\ket{011} + \alpha\ket{101} + \alpha\ket{111} + \beta\ket{010} + \beta\ket{001} - \beta\ket{110} - \beta\ket{101}) \\
+    &= \frac{1}{2} (\alpha \ket{000} + \alpha\ket{011} + \alpha\ket{100} + \alpha\ket{111} + \beta\ket{010} + \beta\ket{001} - \beta\ket{110} - \beta\ket{101}) \\
     &= \frac{1}{2} \ketzz (\super) + \ketzo (\alpha\keto + \beta\ketz) + \ketoz (\super[-]) + \ketoo(\alpha\keto - \beta\ketz)
 \end{align*}
 
